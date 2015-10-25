@@ -1,9 +1,9 @@
 package com.popularmovie.android.appprotfolio.popularmovie;
 
 
-public class   MovieSelection {
+public class MovieSelection {
     private String page = "1";
-    private SelectionType selectionType = null;
+    private SelectionType selectionType = SelectionType.Popular;
 
     public void setPage(String page) {
         this.page = page;
@@ -13,16 +13,12 @@ public class   MovieSelection {
         this.selectionType = selectionType;
     }
 
-    MovieSelection(SelectionType selectionType, String page){
-        this.page = page;
-        this.selectionType = selectionType;
-    }
 
-    public String getPage(){
+    public String getPage() {
         return page;
     }
 
-    public SelectionType getSelectionType(){
+    public SelectionType getSelectionType() {
         return selectionType;
     }
 }

@@ -32,7 +32,6 @@ public class MovieTask extends AsyncTask<MovieSelection, Void, List<Movie>> {
     private static final String PAGE = "page";
     private static final String IMAGE_URI_PREFIX = "http://image.tmdb.org/t/p/w185/";
 
-
     /**
      * @param params
      * @return
@@ -53,6 +52,7 @@ public class MovieTask extends AsyncTask<MovieSelection, Void, List<Movie>> {
             }
             listMovieJsonStr = placeRequestToAPI(url, movieSelection);
         }
+
         return getMovieListingFromJson(listMovieJsonStr);
 
     }
@@ -177,7 +177,7 @@ public class MovieTask extends AsyncTask<MovieSelection, Void, List<Movie>> {
                 }
             }
         }
-        return null;
+        return listMovieJsonStr;
     }
 
 
@@ -213,7 +213,7 @@ public class MovieTask extends AsyncTask<MovieSelection, Void, List<Movie>> {
                     movie.setOverview(movieJSONObject.getString(MOVIE_OVERVIEW));
                     movie.setPoster_path(IMAGE_URI_PREFIX + movieJSONObject.getString(MOVIE_POSTER_PATH));
                     try {
-                        Date movieReleaseDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(movieJSONObject.getString(MOVIE_RELEASE_DATE));
+                        Date movieReleaseDate = new SimpleDateFormat("yyyy-MM-dd").parse(movieJSONObject.getString(MOVIE_RELEASE_DATE));
                         movie.setRelease_date(movieReleaseDate);
                     } catch (ParseException e) {
                         Log.e(LOG_TAG, "Date Conversion Exception: " + e);
@@ -227,6 +227,8 @@ public class MovieTask extends AsyncTask<MovieSelection, Void, List<Movie>> {
                     Log.v(LOG_TAG, "Movie Id: " + s.getId());
                     Log.v(LOG_TAG, "Movie Poster URI: " + s.getPoster_path());
                 }
+            } else {
+                Log.e("Error No JSON", "listMovieJsonStr is Null");
             }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "JSON Exception" + e);
@@ -234,4 +236,6 @@ public class MovieTask extends AsyncTask<MovieSelection, Void, List<Movie>> {
         return listOfMovie;
 
     }
+
+
 }
