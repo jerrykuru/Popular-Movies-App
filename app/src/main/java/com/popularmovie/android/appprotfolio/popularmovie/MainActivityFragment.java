@@ -1,10 +1,20 @@
 package com.popularmovie.android.appprotfolio.popularmovie;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.Toast;
+
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -12,6 +22,9 @@ import android.view.ViewGroup;
 public class MainActivityFragment extends Fragment {
 
     private static final String LOG_TAG = MainActivityFragment.class.getSimpleName();
+    //private  AsyncTask<MovieSelection, Void, List<Movie>> movieList;
+    private List<Movie> movieList;
+    private ImageAdapter adapter;
 
     public MainActivityFragment() {
     }
@@ -20,13 +33,66 @@ public class MainActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        getMovieListByPreference();
 
-        return inflater.inflate(R.layout.fragment_main, container, false);
+            adapter = new ImageAdapter(getActivity(), movieList);
+            GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
+            gridview.setAdapter(adapter);
+
+
+            gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View v,
+                                        int position, long id) {
+                    Toast.makeText(getContext(), "" + position,
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+        setHasOptionsMenu(true);
+        return rootView;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        getMovieListByPreference();
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+
+    }
+
+
+    private void getMovieListByPreference() {
+        Log.d(LOG_TAG,"getMovieListByPreference");
+        MovieTask movieTask = new MovieTask(adapter);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String movieSortSelection = prefs.getString(getString(R.string.movie_sort_key), getString(R.string.movie_sort_key_default));
+        MovieSelection movieSelection = new MovieSelection();
+        if (movieSortSelection.equalsIgnoreCase(SelectionType.HighestRated.getSortType())) {
+            movieSelection.setSelectionType(SelectionType.HighestRated);
+        }
+        if (movieSortSelection.equalsIgnoreCase(SelectionType.Popular.getSortType())) {
+            movieSelection.setSelectionType(SelectionType.Popular);
+        }
+        try {
+            movieList = movieTask.execute(movieSelection).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
     }
 

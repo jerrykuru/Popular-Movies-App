@@ -2,5 +2,13 @@ package com.popularmovie.android.appprotfolio.popularmovie;
 
 
 public enum SelectionType {
-    Popular, HighestRated
+    Popular("Most Popular"), HighestRated("Highest Rated");
+    private String sortSelection;
+    private SelectionType(String s) {
+        this.sortSelection  = s;
+    }
+
+    public String getSortType(){
+        return this.sortSelection;
+    }
 }

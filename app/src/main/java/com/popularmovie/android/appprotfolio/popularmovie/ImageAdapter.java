@@ -15,6 +15,7 @@ import java.util.List;
 public class ImageAdapter extends BaseAdapter {
 
     private static final String LOG_TAG = ImageAdapter.class.getSimpleName();
+
     private Context mContext;
 
     private List<Movie> movieList = null;
@@ -24,7 +25,8 @@ public class ImageAdapter extends BaseAdapter {
     public ImageAdapter(Context c, List<Movie> movieListInput) {
         mContext = c;
         movieList = movieListInput;
-        layoutinflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layoutinflater = LayoutInflater.from(mContext);
+
     }
 
     public int getCount() {
@@ -56,4 +58,11 @@ public class ImageAdapter extends BaseAdapter {
         return imageView;
     }
 
+
+
+    public void addall(List<Movie> listOfMovies){
+        movieList.clear();
+        this.movieList =  listOfMovies;
+        this.notifyDataSetChanged();
+    }
 }

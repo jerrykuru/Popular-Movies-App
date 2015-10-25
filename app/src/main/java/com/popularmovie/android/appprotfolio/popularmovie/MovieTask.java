@@ -31,6 +31,11 @@ public class MovieTask extends AsyncTask<MovieSelection, Void, List<Movie>> {
     private static final String ApiKey = "7c5abefc53acec71067d4859c75dbd0f";
     private static final String PAGE = "page";
     private static final String IMAGE_URI_PREFIX = "http://image.tmdb.org/t/p/w185/";
+    private ImageAdapter imageAdapter;
+
+    public MovieTask(ImageAdapter adapter){
+        this.imageAdapter =  adapter;
+    }
 
     /**
      * @param params
@@ -237,5 +242,14 @@ public class MovieTask extends AsyncTask<MovieSelection, Void, List<Movie>> {
 
     }
 
+
+    @Override
+    protected void onPostExecute(List<Movie> results) {
+        if (results != null) {
+            if(imageAdapter  != null) {
+                imageAdapter.addall(results);
+            }
+        }
+    }
 
 }
