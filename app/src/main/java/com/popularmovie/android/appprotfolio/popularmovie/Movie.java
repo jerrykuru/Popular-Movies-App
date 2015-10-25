@@ -11,6 +11,7 @@ public class Movie {
     private String overview = null;
     private int duration = 0;
 
+
     public String getId() {
         return id;
     }
