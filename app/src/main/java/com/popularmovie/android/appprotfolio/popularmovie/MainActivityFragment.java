@@ -41,7 +41,6 @@ public class MainActivityFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
                 Movie movie = (Movie) adapter.getItem(position);
-                Log.d(LOG_TAG,movie.getId());
                 Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
                 intent.putExtra(MovieConstants.CUSTOM_LISTING, movie);
                 startActivity(intent);
@@ -87,8 +86,10 @@ public class MainActivityFragment extends Fragment {
             movieList = movieTask.execute(movieSelection).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            Log.e(LOG_TAG,"InterruptedException: ",e);
         } catch (ExecutionException e) {
             e.printStackTrace();
+            Log.e(LOG_TAG, "ExecutionException: ", e);
         }
 
     }

@@ -9,7 +9,7 @@ public class Movie implements Serializable {
     private String poster_path = null;
     private Date release_date = null;
     private Double vote_average = 0.0;
-    private String overview = null;
+    private String overview = "n/a";
     private int duration = 0;
 
 

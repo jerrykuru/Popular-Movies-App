@@ -28,7 +28,6 @@ public class MovieTask extends AsyncTask<MovieSelection, Void, List<Movie>> {
     private static final String DISCOVER_MOVIE_URL = "http://api.themoviedb.org/3/discover/movie?";
     private static final String SORT_BY = "sort_by";
     private static final String API_KEY = "api_key";
-    private static final String ApiKey = "7c5abefc53acec71067d4859c75dbd0f";
     private static final String PAGE = "page";
     private static final String IMAGE_URI_PREFIX = "http://image.tmdb.org/t/p/w185/";
     private ImageAdapter imageAdapter;
@@ -79,7 +78,7 @@ public class MovieTask extends AsyncTask<MovieSelection, Void, List<Movie>> {
             Uri builtUri = Uri.parse(DISCOVER_MOVIE_URL).buildUpon()
                     .appendQueryParameter(SORT_BY, POPULARITY_DESC)
                     .appendQueryParameter(PAGE, page)
-                    .appendQueryParameter(API_KEY, ApiKey)
+                    .appendQueryParameter(API_KEY, MovieConstants.ApiKey)
                     .build();
             url = new URL(builtUri.toString());
             Log.v(LOG_TAG, builtUri.toString());
@@ -110,7 +109,7 @@ public class MovieTask extends AsyncTask<MovieSelection, Void, List<Movie>> {
                     .appendQueryParameter(CERTIFICATION_COUNTRY, CERTIFICATION_COUNTRY_US)
                     .appendQueryParameter(SORT_BY, HIGHEST_RATED)
                     .appendQueryParameter(PAGE, page)
-                    .appendQueryParameter(API_KEY, ApiKey)
+                    .appendQueryParameter(API_KEY, MovieConstants.ApiKey)
                     .build();
             url = new URL(builtUri.toString());
             Log.v(LOG_TAG, builtUri.toString());
