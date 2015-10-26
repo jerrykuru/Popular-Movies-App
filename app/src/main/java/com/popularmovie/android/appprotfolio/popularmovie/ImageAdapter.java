@@ -60,7 +60,7 @@ public class ImageAdapter extends BaseAdapter {
 
 
 
-    public void addall(List<Movie> listOfMovies){
+    public void addAll(List<Movie> listOfMovies){
         movieList.clear();
         this.movieList =  listOfMovies;
         this.notifyDataSetChanged();

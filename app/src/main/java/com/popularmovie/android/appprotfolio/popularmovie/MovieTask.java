@@ -246,7 +246,7 @@ public class MovieTask extends AsyncTask<MovieSelection, Void, List<Movie>> {
     protected void onPostExecute(List<Movie> results) {
         if (results != null) {
             if(imageAdapter  != null) {
-                imageAdapter.addall(results);
+                imageAdapter.addAll(results);
             }
         }
     }
