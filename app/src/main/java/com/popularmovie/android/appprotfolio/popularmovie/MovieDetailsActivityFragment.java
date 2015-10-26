@@ -28,6 +28,7 @@ public class MovieDetailsActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_movie_details, container, false);
+        String voteAverage = "/10";
         Movie movie;
         Intent b = getActivity().getIntent();
         if (b != null) {
@@ -41,7 +42,7 @@ public class MovieDetailsActivityFragment extends Fragment {
                 cal.setTime(new Date());
             }
             ((TextView) rootView.findViewById(R.id.release_date)).setText(Integer.toString(cal.get(Calendar.YEAR)));
-            ((TextView) rootView.findViewById(R.id.vote_average)).setText(Double.toString(movie.getVote_average()));
+            ((TextView) rootView.findViewById(R.id.vote_average)).setText(Double.toString(movie.getVote_average())+voteAverage);
             ImageView imageView = (ImageView) rootView.findViewById(R.id.poster);
             Picasso.with(getContext()).load(movie.getPoster_path()).into(imageView);
         }
