@@ -1,8 +1,9 @@
 package com.popularmovie.android.appprotfolio.popularmovie;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Movie {
+public class Movie implements Serializable {
     private String id = null;
     private String title = null;
     private String poster_path = null;

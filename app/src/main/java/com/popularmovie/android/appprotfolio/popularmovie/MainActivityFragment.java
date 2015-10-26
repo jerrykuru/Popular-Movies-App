@@ -1,5 +1,6 @@
 package com.popularmovie.android.appprotfolio.popularmovie;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -11,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -22,9 +22,9 @@ import java.util.concurrent.ExecutionException;
 public class MainActivityFragment extends Fragment {
 
     private static final String LOG_TAG = MainActivityFragment.class.getSimpleName();
-    //private  AsyncTask<MovieSelection, Void, List<Movie>> movieList;
     private List<Movie> movieList;
     private ImageAdapter adapter;
+
 
     public MainActivityFragment() {
     }
@@ -32,24 +32,22 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         getMovieListByPreference();
+        adapter = new ImageAdapter(getActivity(), movieList);
+        GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
+        gridview.setAdapter(adapter);
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                Movie movie = (Movie) adapter.getItem(position);
+                Log.d(LOG_TAG,movie.getId());
+                Intent intent = new Intent(getActivity(), MovieDetailsActivity.class);
+                intent.putExtra(MovieConstants.CUSTOM_LISTING, movie);
+                startActivity(intent);
 
-            adapter = new ImageAdapter(getActivity(), movieList);
-            GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
-            gridview.setAdapter(adapter);
-
-
-            gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                public void onItemClick(AdapterView<?> parent, View v,
-                                        int position, long id) {
-                    Toast.makeText(getContext(), "" + position,
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
-
-
+            }
+        });
         setHasOptionsMenu(true);
         return rootView;
     }
@@ -75,7 +73,6 @@ public class MainActivityFragment extends Fragment {
 
 
     private void getMovieListByPreference() {
-        Log.d(LOG_TAG,"getMovieListByPreference");
         MovieTask movieTask = new MovieTask(adapter);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String movieSortSelection = prefs.getString(getString(R.string.movie_sort_key), getString(R.string.movie_sort_key_default));
