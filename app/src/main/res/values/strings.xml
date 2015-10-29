@@ -7,6 +7,7 @@
     <string name="movie_sort_key">"movieListingChoice"</string>
     <string name="movie_sort_key_default">"Most Popular"</string>
     <string name="title_activity_movie_details">MovieDetailsActivity</string>
+    <string name="content_authority">com.popularmovie.android.appprotfolio.popularmovie</string>
 
 
 </resources>
