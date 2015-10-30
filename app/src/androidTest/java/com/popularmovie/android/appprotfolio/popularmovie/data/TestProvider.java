@@ -326,4 +326,40 @@ public class TestProvider extends AndroidTestCase {
         db.close();
         return trailerId;
     }
+
+
+    /*
+           This test uses the database directly to insert and then uses the ContentProvider to
+           read out the data.
+    */
+    public void testMovieDetailsQuery() {
+        // insert our test records into the database
+        MovieDbHelper dbHelper = new MovieDbHelper(mContext);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long movieId;
+        String selection = null;
+        if (null == selection) selection = "1";
+        db.delete(
+                MovieContract.MovieEntry.TABLE_NAME, selection, null);
+
+        ContentValues testValues = TestUtilities.createMovieValues();
+        long movieTrailerID = insertMovieValues(mContext);
+
+        assertTrue("Unable to Insert MovieTrailerEntry into the Database", movieTrailerID != -1);
+
+        db.close();
+
+        // Test the basic content provider query
+        Cursor movieDetailsCursor = mContext.getContentResolver().query(
+                MovieContract.MovieEntry.buildMovieUri(1),
+                null,
+                null,
+                null,
+                null
+        );
+
+        // Make sure we get the correct cursor out of the database
+        TestUtilities.validateCursor("testMovieDetailsQuery", movieDetailsCursor, testValues);
+    }
+
 }
