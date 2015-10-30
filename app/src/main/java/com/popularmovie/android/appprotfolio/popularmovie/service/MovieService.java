@@ -237,10 +237,10 @@ public class MovieService extends IntentService {
                     listOfMovie.add(movie);
                 }
 
-                for (Movie s : listOfMovie) {
-                    Log.v(LOG_TAG, "Movie Id: " + s.getId());
-                    Log.v(LOG_TAG, "Movie Poster URI: " + s.getPoster_path());
-                }
+//                for (Movie s : listOfMovie) {
+//                    Log.v(LOG_TAG, "Movie Id: " + s.getId());
+//                    Log.v(LOG_TAG, "Movie Poster URI: " + s.getPoster_path());
+//                }
             } else {
                 Log.e("Error No JSON", "listMovieJsonStr is Null");
             }
@@ -258,8 +258,16 @@ public class MovieService extends IntentService {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         for (Movie s : listOfMovie) {
-            ContentValues weatherValues = new ContentValues();
+//            Log.e(LOG_TAG,s.getId());
+//            Log.e(LOG_TAG,s.getPoster_path());
+//            Log.e(LOG_TAG,s.getOverview());
+//            Log.e(LOG_TAG,df.format(s.getRelease_date()));
+//            Log.e(LOG_TAG,s.getTitle());
+//            Log.e(LOG_TAG,new Double(s.getVote_average()).toString());
+
+
             ContentValues testValues = new ContentValues();
+            testValues.put(MovieContract.MovieEntry._ID, s.getId());
             testValues.put(MovieContract.MovieEntry.COLUMN_FAVORITE_FLAG, movieSelection.getSelectionType() == SelectionType.Favourite ? "true" : "false");
             testValues.put(MovieContract.MovieEntry.COLUMN_HIGHESTRATED, movieSelection.getSelectionType() == SelectionType.HighestRated ? "true" : "false");
             testValues.put(MovieContract.MovieEntry.COLUMN_OVERVIEW, s.getOverview());
@@ -267,9 +275,8 @@ public class MovieService extends IntentService {
             testValues.put(MovieContract.MovieEntry.COLUMN_POSTER_PATH, s.getPoster_path());
             testValues.put(MovieContract.MovieEntry.COLUMN_RELEASE_DATE, df.format(s.getRelease_date()));
             testValues.put(MovieContract.MovieEntry.COLUMN_TITLE, s.getTitle());
-            testValues.put(MovieContract.MovieEntry.COLUMN_VOTE_AVERAGE, s.getVote_average());
-            testValues.put(MovieContract.MovieEntry._ID, s.getId());
-            cVVector.add(weatherValues);
+            testValues.put(MovieContract.MovieEntry.COLUMN_VOTE_AVERAGE, new Double(s.getVote_average()).toString());
+            cVVector.add(testValues);
         }
 
 

@@ -22,14 +22,14 @@ public class MovieDbHelper extends SQLiteOpenHelper {
         // location setting, the city name, and the latitude and longitude
         final String SQL_CREATE_MOVIE_TABLE = "CREATE TABLE " + MovieContract.MovieEntry.TABLE_NAME + " (" +
                 MovieContract.MovieEntry._ID + " TEXT NOT NULL, " +
-                MovieContract.MovieEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
-                MovieContract.MovieEntry.COLUMN_RELEASE_DATE + " TEXT UNIQUE NOT NULL, " +
-                MovieContract.MovieEntry.COLUMN_POSTER_PATH + " TEXT NOT NULL, " +
-                MovieContract.MovieEntry.COLUMN_VOTE_AVERAGE + " REAL NOT NULL, " +
-                MovieContract.MovieEntry.COLUMN_OVERVIEW + " TEXT NOT NULL, " +
-                MovieContract.MovieEntry.COLUMN_FAVORITE_FLAG + " TEXT NOT NULL, " +
-                MovieContract.MovieEntry.COLUMN_HIGHESTRATED + " TEXT NOT NULL, " +
-                MovieContract.MovieEntry.COLUMN_POPULAR + " TEXT NOT NULL " +
+                MovieContract.MovieEntry.COLUMN_TITLE + " TEXT, " +
+                MovieContract.MovieEntry.COLUMN_RELEASE_DATE + " TEXT, " +
+                MovieContract.MovieEntry.COLUMN_POSTER_PATH + " TEXT, " +
+                MovieContract.MovieEntry.COLUMN_VOTE_AVERAGE + " REAL, " +
+                MovieContract.MovieEntry.COLUMN_OVERVIEW + " TEXT, " +
+                MovieContract.MovieEntry.COLUMN_FAVORITE_FLAG + " TEXT, " +
+                MovieContract.MovieEntry.COLUMN_HIGHESTRATED + " TEXT, " +
+                MovieContract.MovieEntry.COLUMN_POPULAR + " TEXT " +
                 " );";
 
         final String SQL_CREATE_REVIEW_TABLE = "CREATE TABLE " + MovieContract.MovieReviewEntry.TABLE_NAME + " (" +

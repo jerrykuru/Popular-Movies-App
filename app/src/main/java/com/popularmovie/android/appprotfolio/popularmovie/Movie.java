@@ -12,6 +12,16 @@ public class Movie implements Serializable {
     private String overview = "n/a";
     private int duration = 0;
 
+    public SelectionType getSelectionType() {
+        return selectionType;
+    }
+
+    public void setSelectionType(SelectionType selectionType) {
+        this.selectionType = selectionType;
+    }
+
+    private SelectionType selectionType = SelectionType.Popular;
+
 
     public String getId() {
         return id;
