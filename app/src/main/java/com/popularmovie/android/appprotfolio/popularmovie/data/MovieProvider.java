@@ -37,19 +37,31 @@ public class MovieProvider extends ContentProvider {
         sMovieReviewQueryBuilder = new SQLiteQueryBuilder();
         sMovieTrailerQueryBuilder = new SQLiteQueryBuilder();
 
+//        sWeatherByLocationSettingQueryBuilder.setTables(
+//                WeatherContract.WeatherEntry.TABLE_NAME + " INNER JOIN " +
+//                        WeatherContract.LocationEntry.TABLE_NAME +
+//                        " ON " + WeatherContract.WeatherEntry.TABLE_NAME +
+//                        "." + WeatherContract.WeatherEntry.COLUMN_LOC_KEY +
+//                        " = " + WeatherContract.LocationEntry.TABLE_NAME +
+//                        "." + WeatherContract.LocationEntry._ID);
+//
         sMovieQueryBuilder.setTables(MovieContract.MovieEntry.TABLE_NAME);
         sMovieTrailerQueryBuilder.setTables(MovieContract.MovieTrailerEntry.TABLE_NAME + " INNER JOIN " +
-                MovieContract.MovieTrailerEntry.TABLE_NAME +
+                MovieContract.MovieEntry.TABLE_NAME +
                 " ON " + MovieContract.MovieTrailerEntry.TABLE_NAME +
                 "." + MovieContract.MovieTrailerEntry.COLUMN_MOVIE_KEY +
                 " = " + MovieContract.MovieEntry.TABLE_NAME +
-                "." + MovieContract.MovieEntry._ID);
+                "." + MovieContract.MovieEntry._ID +
+                " And " + MovieContract.MovieTrailerEntry.TABLE_NAME +
+                        "." + MovieContract.MovieTrailerEntry.COLUMN_MOVIE_KEY + " = ?" );
         sMovieReviewQueryBuilder.setTables(MovieContract.MovieReviewEntry.TABLE_NAME + " INNER JOIN " +
-                MovieContract.MovieTrailerEntry.TABLE_NAME +
+                MovieContract.MovieEntry.TABLE_NAME +
                 " ON " + MovieContract.MovieReviewEntry.TABLE_NAME +
                 "." + MovieContract.MovieReviewEntry.COLUMN_MOVIE_KEY +
                 " = " + MovieContract.MovieEntry.TABLE_NAME +
-                "." + MovieContract.MovieEntry._ID);
+                "." + MovieContract.MovieEntry._ID+
+                " And " + MovieContract.MovieReviewEntry.TABLE_NAME +
+                "." + MovieContract.MovieReviewEntry.COLUMN_MOVIE_KEY + " = ?" );
     }
 
     //select Popular Movies
@@ -187,11 +199,12 @@ public class MovieProvider extends ContentProvider {
     // content://com.popularmovie.android.appprotfolio.popularmovie/review/{id}
     private Cursor getMovieReviewsByMovieId(Uri uri, String[] projection, String sortOrder) {
         String movieId = MovieContract.MovieReviewEntry.getMovieIdFromUri(uri);
+        String[] listOfArg =  new String[]{movieId};
 
         return sMovieReviewQueryBuilder.query(mOpenHelper.getReadableDatabase(),
                 projection,
                 null,
-                new String[]{movieId},
+                listOfArg,
                 null,
                 null,
                 sortOrder

@@ -75,16 +75,14 @@ public class MovieContract {
             return CONTENT_URI.buildUpon().appendPath(MOVIE_HIGHEST_RATED).build();
         }
 
-        public static Uri buildMoviesDetailsUri(String movieID) {
-            return CONTENT_URI.buildUpon().appendPath(movieID).build();
-        }
+
 
         public static Uri buildListFavouriteMoviesUri() {
             return CONTENT_URI.buildUpon().appendPath(MOVIE_FAVOURITE).build();
         }
 
-        public static Uri buildAddFavouriteMoviesUri(String movieID) {
-            return CONTENT_URI.buildUpon().appendPath(MOVIE_FAVOURITE).appendPath(MOVIE_ADD_FAVOURITE).appendPath(movieID).build();
+        public static Uri buildAddFavouriteMoviesUri(long movieID) {
+            return CONTENT_URI.buildUpon().appendPath(MOVIE_FAVOURITE).appendPath(MOVIE_ADD_FAVOURITE).appendPath(Math.round(movieID)+"").build();
         }
 
         public static Uri buildMovieUri(long id) {
@@ -151,9 +149,7 @@ public class MovieContract {
         public static final String COLUMN_YOUTUBE_SIZE = "size";
         public static final String COLUMN_YOUTUBE_TYPE = "type";
 
-        public static Uri buildListTrailerURI(String movieID) {
-            return CONTENT_URI.buildUpon().appendPath(movieID).build();
-        }
+
 
         public static String getMovieIdFromUri(Uri uri) {
             return uri.getPathSegments().get(1);

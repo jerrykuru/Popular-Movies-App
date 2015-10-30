@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
 
@@ -53,7 +54,7 @@ public class TestProvider extends AndroidTestCase {
     public void testGetType() {
 
         // content://com.popularmovie.android.appprotfolio.popularmovie/movie/highestRated
-       String type = mContext.getContentResolver().getType(
+        String type = mContext.getContentResolver().getType(
                 MovieContract.MovieEntry.buildListOfHighestRatedMovies());
         // vnd.android.cursor.dir/com.popularmovie.android.appprotfolio.popularmovie/movie
         assertEquals("Error: the MovieEntry CONTENT_URI with highestRated should return  MovieContract.MovieEntry.CONTENT_TYPE",
@@ -69,10 +70,10 @@ public class TestProvider extends AndroidTestCase {
                 MovieContract.MovieEntry.CONTENT_TYPE, type);
 
 
-        String movie_id = "1234";
+        long movie_id = 1234;
         // content://com.popularmovie.android.appprotfolio.popularmovie/movie/{id}
         type = mContext.getContentResolver().getType(
-                MovieContract.MovieEntry.buildMoviesDetailsUri(movie_id));
+                MovieContract.MovieEntry.buildMovieUri(movie_id));
         // vnd.android.cursor.dir/com.popularmovie.android.appprotfolio.popularmovie/movie
         assertEquals("Error: the MovieEntry CONTENT_URI Movie Details should return  MovieContract.MovieEntry.CONTENT_ITEM_TYPE",
                 MovieContract.MovieEntry.CONTENT_ITEM_TYPE, type);
@@ -106,7 +107,7 @@ public class TestProvider extends AndroidTestCase {
 
         // content://com.popularmovie.android.appprotfolio.popularmovie/trailer/{id}
         type = mContext.getContentResolver().getType(
-                MovieContract.MovieTrailerEntry.buildListTrailerURI(movie_id));
+                MovieContract.MovieTrailerEntry.buildMovieTrailerUri(movie_id));
 
         // vnd.android.cursor.dir/com.popularmovie.android.appprotfolio.popularmovie/trailer
         assertEquals("Error: the MovieEntry CONTENT_URI with MOVIE TRAILER list  should return  MovieContract.MovieEntry.CONTENT_TYPE",
@@ -117,34 +118,130 @@ public class TestProvider extends AndroidTestCase {
 
     /*
            This test uses the database directly to insert and then uses the ContentProvider to
-           read out the data.  Uncomment this test to see if the basic weather query functionality
-           given in the ContentProvider is working correctly.
-        */
-    public void testBasicWeatherQuery() {
+           read out the data.
+    */
+    public void testHighestRatedMoviesMovieQuery() {
         // insert our test records into the database
         MovieDbHelper dbHelper = new MovieDbHelper(mContext);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues testValues = TestUtilities.createMovieValues();
+        String selection = null;
+        if (null == selection) selection = "1";
+        db.delete(
+                MovieContract.MovieEntry.TABLE_NAME, selection, null);
+
         long movieID = insertMovieValues(mContext);
 
-        assertTrue("Unable to Insert WeatherEntry into the Database", movieID != -1);
+        assertTrue("Unable to Insert MovieEntry into the Database", movieID != -1);
 
         db.close();
-//
-//        // Test the basic content provider query
-//        Cursor weatherCursor = mContext.getContentResolver().query(
-//                WeatherEntry.CONTENT_URI,
-//                null,
-//                null,
-//                null,
-//                null
-//        );
-//
-//        // Make sure we get the correct cursor out of the database
-//        TestUtilities.validateCursor("testBasicWeatherQuery", weatherCursor, weatherValues);
+
+        // Test the basic content provider query
+        Cursor movieCursor = mContext.getContentResolver().query(
+                MovieContract.MovieEntry.buildListOfHighestRatedMovies(),
+                null,
+                null,
+                null,
+                null
+        );
+        // Make sure we get the correct cursor out of the database
+        TestUtilities.validateCursor("testHighestRatedMoviesMovieQuery", movieCursor, testValues);
     }
 
+
+    /*
+      This test uses the database directly to insert and then uses the ContentProvider to
+      read out the data.
+*/
+    public void testPopularMoviesQuery() {
+        // insert our test records into the database
+        MovieDbHelper dbHelper = new MovieDbHelper(mContext);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues testValues = TestUtilities.createPopularMovieValues();
+        String selection = null;
+        if (null == selection) selection = "1";
+        db.delete(
+                MovieContract.MovieEntry.TABLE_NAME, selection, null);
+
+        long movieID = insertPopularMovieValues(mContext);
+
+        assertTrue("Unable to Insert MovieEntry into the Database", movieID != -1);
+
+        db.close();
+
+        // Test the basic content provider query
+        Cursor movieCursor = mContext.getContentResolver().query(
+                MovieContract.MovieEntry.buildListOfPopularMovies(),
+                null,
+                null,
+                null,
+                null
+        );
+
+        // Make sure we get the correct cursor out of the database
+        TestUtilities.validateCursor("testPopularMoviesQuery", movieCursor, testValues);
+    }
+
+
+    /*
+           This test uses the database directly to insert and then uses the ContentProvider to
+           read out the data.
+    */
+    public void testBasicMovieReviewQuery() {
+        // insert our test records into the database
+        MovieDbHelper dbHelper = new MovieDbHelper(mContext);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues testValues = TestUtilities.createMovieReviewValues();
+        long movieReviewID = insertMovieReviewValues(mContext);
+
+        assertTrue("Unable to Insert MovieReviewEntry into the Database", movieReviewID != -1);
+
+        db.close();
+
+        // Test the basic content provider query
+        Cursor movieReviewCursor = mContext.getContentResolver().query(
+                MovieContract.MovieReviewEntry.buildListMovieReviewURI(1),
+                null,
+                null,
+                null,
+                null
+        );
+
+        // Make sure we get the correct cursor out of the database
+        TestUtilities.validateCursor("testBasicMovieReviewQuery", movieReviewCursor, testValues);
+    }
+
+    /*
+             This test uses the database directly to insert and then uses the ContentProvider to
+             read out the data.
+      */
+    public void testBasicMovieTrailerQuery() {
+        // insert our test records into the database
+        MovieDbHelper dbHelper = new MovieDbHelper(mContext);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues testValues = TestUtilities.createMovieTrailerValues();
+        long movieTrailerID = insertMovieTrailerValues(mContext);
+
+        assertTrue("Unable to Insert MovieTrailerEntry into the Database", movieTrailerID != -1);
+
+        db.close();
+
+        // Test the basic content provider query
+        Cursor movieTrailerCursor = mContext.getContentResolver().query(
+                MovieContract.MovieTrailerEntry.buildMovieTrailerUri(1),
+                null,
+                null,
+                null,
+                null
+        );
+
+        // Make sure we get the correct cursor out of the database
+        TestUtilities.validateCursor("testBasicMovieTrailerQuery", movieTrailerCursor, testValues);
+    }
 
     static long insertMovieValues(Context context) {
         // insert our test records into the database
@@ -157,8 +254,76 @@ public class TestProvider extends AndroidTestCase {
         locationRowId = db.insert(MovieContract.MovieEntry.TABLE_NAME, null, testValues);
 
         // Verify we got a row back.
-        assertTrue("Error: Failure to insert North Pole Location Values", locationRowId != -1);
-
+        assertTrue("Error: Failure to insert MovieEntry Values", locationRowId != -1);
+        db.close();
         return locationRowId;
+    }
+
+    static long insertPopularMovieValues(Context context) {
+        // insert our test records into the database
+        MovieDbHelper dbHelper = new MovieDbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues testValues = TestUtilities.createPopularMovieValues();
+
+        long locationRowId;
+        locationRowId = db.insert(MovieContract.MovieEntry.TABLE_NAME, null, testValues);
+
+        // Verify we got a row back.
+        assertTrue("Error: Failure to insert MovieEntry Values", locationRowId != -1);
+        db.close();
+        return locationRowId;
+    }
+
+
+    static long insertMovieReviewValues(Context context) {
+        // insert our test records into the database
+        MovieDbHelper dbHelper = new MovieDbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues testValues = TestUtilities.createMovieReviewValues();
+        ContentValues testMovieValues = TestUtilities.createMovieValues();
+
+        long movieId;
+        movieId = db.insert(MovieContract.MovieEntry.TABLE_NAME, null, testMovieValues);
+
+        // Verify we got a row back.
+        assertTrue("Error: Failure to insert MovieEntry  in nsertMovieReviewValues Values", movieId != -1);
+
+        long locationRowId;
+        locationRowId = db.insert(MovieContract.MovieReviewEntry.TABLE_NAME, null, testValues);
+
+        // Verify we got a row back.
+        assertTrue("Error: Failure to insert MovieReviewEntry Values", locationRowId != -1);
+        db.close();
+        return locationRowId;
+    }
+
+
+    static long insertMovieTrailerValues(Context context) {
+        // insert our test records into the database
+        MovieDbHelper dbHelper = new MovieDbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues testValues = TestUtilities.createMovieTrailerValues();
+        ContentValues testMovieValues = TestUtilities.createMovieValues();
+
+        long movieId;
+        String selection = null;
+        if (null == selection) selection = "1";
+        db.delete(
+                MovieContract.MovieEntry.TABLE_NAME, selection, null);
+        movieId = db.insert(MovieContract.MovieEntry.TABLE_NAME, null, testMovieValues);
+
+        // Verify we got a row back.
+        assertTrue("Error: Failure to insert MovieEntry  in insertMovieTrailerValues Values", movieId != -1);
+
+        long trailerId;
+        trailerId = db.insert(MovieContract.MovieTrailerEntry.TABLE_NAME, null, testValues);
+
+        // Verify we got a row back.
+        assertTrue("Error: Failure to insert MovieTrailerEntry Values", trailerId != -1);
+        db.close();
+        return trailerId;
     }
 }
