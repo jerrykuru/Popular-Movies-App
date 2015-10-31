@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -119,8 +118,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     // Invoke the Movie Service
     private void getMovieListByPreference() {
-        Log.d(LOG_TAG,"I am in getMovieListByPreference");
-     //   onMovieSelectionPreferenceChange();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String movieSortSelection = prefs.getString(getString(R.string.movie_sort_key), getString(R.string.movie_sort_key_default));
         Intent intent = new Intent(getActivity(), MovieService.class);
