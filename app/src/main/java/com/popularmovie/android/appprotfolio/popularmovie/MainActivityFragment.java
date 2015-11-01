@@ -124,8 +124,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         intent.putExtra(MovieService.MOVIE_SELECTION_TYPE,
                 movieSortSelection);
         getActivity().startService(intent);
-
-
     }
 
     @Override
@@ -159,7 +157,8 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         super.onActivityCreated(savedInstanceState);
     }
 
-    void onMovieSelectionPreferenceChange( ) {
-       getLoaderManager().restartLoader(MOVIE_LOADER, null, this);
+    //TODO
+    void onMovieSelectionPreferenceChange() {
+        getLoaderManager().restartLoader(MOVIE_LOADER, null, this);
     }
 }
