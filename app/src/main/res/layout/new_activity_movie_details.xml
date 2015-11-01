@@ -12,17 +12,17 @@
     <fragment android:name="com.popularmovie.android.appprotfolio.popularmovie.MovieDetailsActivityFragment"
         android:id="@+id/movie_details"
         android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <fragment android:name="com.popularmovie.android.appprotfolio.popularmovie.MovieTrailerFragment"
         android:id="@+id/movie_trailer"
         android:layout_weight="2"
-        android:layout_width="0dp"
-        android:layout_height="match_parent" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <fragment android:name="com.popularmovie.android.appprotfolio.popularmovie.MovieReviewFragment"
         android:id="@+id/movie_reviews"
         android:layout_weight="2"
-        android:layout_width="0dp"
-        android:layout_height="match_parent" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>
 </ScrollView>
