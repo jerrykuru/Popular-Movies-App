@@ -53,7 +53,6 @@ public class HttpUtility {
                 return null;
             }
             listMovieJsonStr = buffer.toString();
-            Log.v(LOG_TAG, "Movie JSON String: " + listMovieJsonStr);
 
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error ", e);

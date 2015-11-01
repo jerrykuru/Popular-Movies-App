@@ -77,7 +77,7 @@ public class TestDB extends AndroidTestCase {
 
         // if this fails, it means that your database doesn't contain all of the required location
         // entry columns
-        assertTrue("Error: The database doesn't contain all of the required location entry columns",
+        assertTrue("ErrPRIMARY KEYor: The database doesn't contain all of the required location entry columns",
                 movieColumnHashSet.isEmpty());
         db.close();
     }

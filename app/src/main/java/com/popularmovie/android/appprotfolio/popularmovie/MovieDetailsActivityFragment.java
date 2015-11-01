@@ -105,12 +105,11 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_movie_details, container, false);
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            mUri = getActivity().getIntent().getData();
-            mMovieId = MovieContract.MovieEntry.getMovieIdFromUri(mUri);
-            getMovieDetailByMovieId(mMovieId);
-        }
+        mUri = getActivity().getIntent().getData();
+        Log.d(LOG_TAG,mUri.toString());
+        mMovieId = MovieContract.MovieEntry.getMovieIdFromUri(mUri);
+        getMovieDetailByMovieId(mMovieId);
+
         mPosterView = (ImageView) rootView.findViewById(R.id.poster);
         mMovieTitleView = (TextView) rootView.findViewById(R.id.movie_title);
         mPlotSynopsisView = (TextView) rootView.findViewById(R.id.plot_synopsis);
@@ -131,7 +130,8 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         if (null != mUri) {
-            Log.d(LOG_TAG,"Calling Cursor Movie with MoveId");
+
+            Log.d(LOG_TAG, "Calling Cursor Movie with MoveId");
             // Now create and return a CursorLoader that will take care of
             // creating a Cursor for the data being displayed.
             return new CursorLoader(
@@ -139,7 +139,7 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
                     mUri,
                     MOVIE_COLUMNS,
                     null,
-                    null,
+                    new String[]{mMovieId},
                     null
             );
         }
@@ -150,6 +150,11 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
         if (data != null && data.moveToFirst()) {
+            Log.d(LOG_TAG,"Count ="+data.getCount());
+            Log.d(LOG_TAG,"Poster ="+data.getString(COL_MOVIE_POSTER_PATH));
+            Log.d(LOG_TAG,"Title ="+data.getString(COL_MOVIE_TITLE));
+            Log.d(LOG_TAG,"COL_MOVIE_OVERVIEW ="+data.getString(COL_MOVIE_OVERVIEW));
+            Log.d(LOG_TAG,"COL_MOVIE_RELEASE_DATE ="+data.getString(COL_MOVIE_RELEASE_DATE));
             Picasso.with(getContext()).load(data.getString(COL_MOVIE_POSTER_PATH)).into(mPosterView);
             mMovieTitleView.setText(data.getString(COL_MOVIE_TITLE));
             mPlotSynopsisView.setText(data.getString(COL_MOVIE_OVERVIEW));

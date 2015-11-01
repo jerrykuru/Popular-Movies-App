@@ -21,7 +21,7 @@ public class MovieDbHelper extends SQLiteOpenHelper {
         // Create a table to hold locations.  A location consists of the string supplied in the
         // location setting, the city name, and the latitude and longitude
         final String SQL_CREATE_MOVIE_TABLE = "CREATE TABLE " + MovieContract.MovieEntry.TABLE_NAME + " (" +
-                MovieContract.MovieEntry._ID + " TEXT NOT NULL, " +
+                MovieContract.MovieEntry._ID + " TEXT NOT NULL PRIMARY KEY, " +
                 MovieContract.MovieEntry.COLUMN_TITLE + " TEXT, " +
                 MovieContract.MovieEntry.COLUMN_RELEASE_DATE + " TEXT, " +
                 MovieContract.MovieEntry.COLUMN_POSTER_PATH + " TEXT, " +
@@ -34,24 +34,24 @@ public class MovieDbHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_REVIEW_TABLE = "CREATE TABLE " + MovieContract.MovieReviewEntry.TABLE_NAME + " (" +
 
-                MovieContract.MovieReviewEntry._ID + " TEXT NOT NULL, " +
-                MovieContract.MovieReviewEntry.COLUMN_AUTHOR + " TEXT NOT NULL, " +
-                MovieContract.MovieReviewEntry.COLUMN_CONTENT + " TEXT NOT NULL, " +
-                MovieContract.MovieReviewEntry.COLUMN_MOVIE_KEY + " TEXT NOT NULL ," +
+                MovieContract.MovieReviewEntry._ID + " TEXT NOT NULL PRIMARY KEY, " +
+                MovieContract.MovieReviewEntry.COLUMN_AUTHOR + " TEXT, " +
+                MovieContract.MovieReviewEntry.COLUMN_CONTENT + " TEXT, " +
+                MovieContract.MovieReviewEntry.COLUMN_MOVIE_KEY + " TEXT," +
                 // Set up the movie id column as a foreign key to movie table.
                 " FOREIGN KEY (" + MovieContract.MovieReviewEntry.COLUMN_MOVIE_KEY + ") REFERENCES " +
                 MovieContract.MovieEntry.TABLE_NAME + " (" + MovieContract.MovieEntry._ID + "));";
 
         final String SQL_CREATE_TRAILER_TABLE = "CREATE TABLE " + MovieContract.MovieTrailerEntry.TABLE_NAME + " (" +
 
-                MovieContract.MovieTrailerEntry._ID + " TEXT NOT NULL, " +
-                MovieContract.MovieTrailerEntry.COLUMN_ISO + " TEXT NOT NULL, " +
-                MovieContract.MovieTrailerEntry.COLUMN_YOUTUBE_KEY + " TEXT NOT NULL, " +
-                MovieContract.MovieTrailerEntry.COLUMN_YOUTUBE_NAME + " TEXT NOT NULL, " +
-                MovieContract.MovieTrailerEntry.COLUMN_YOUTUBE_SITE + " TEXT NOT NULL, " +
-                MovieContract.MovieTrailerEntry.COLUMN_YOUTUBE_SIZE + " TEXT NOT NULL, " +
-                MovieContract.MovieTrailerEntry.COLUMN_YOUTUBE_TYPE + " TEXT NOT NULL, " +
-                MovieContract.MovieTrailerEntry.COLUMN_MOVIE_KEY + " TEXT NOT NULL ," +
+                MovieContract.MovieTrailerEntry._ID + " TEXT NOT NULL PRIMARY KEY, " +
+                MovieContract.MovieTrailerEntry.COLUMN_ISO + " TEXT, " +
+                MovieContract.MovieTrailerEntry.COLUMN_YOUTUBE_KEY + " TEXT, " +
+                MovieContract.MovieTrailerEntry.COLUMN_YOUTUBE_NAME + " TEXT, " +
+                MovieContract.MovieTrailerEntry.COLUMN_YOUTUBE_SITE + " TEXT, " +
+                MovieContract.MovieTrailerEntry.COLUMN_YOUTUBE_SIZE + " TEXT, " +
+                MovieContract.MovieTrailerEntry.COLUMN_YOUTUBE_TYPE + " TEXT, " +
+                MovieContract.MovieTrailerEntry.COLUMN_MOVIE_KEY + " TEXT," +
                 // Set up the movie id column as a foreign key to movie table.
                 " FOREIGN KEY (" + MovieContract.MovieTrailerEntry.COLUMN_MOVIE_KEY + ") REFERENCES " +
                 MovieContract.MovieEntry.TABLE_NAME + " (" + MovieContract.MovieEntry._ID + "));";

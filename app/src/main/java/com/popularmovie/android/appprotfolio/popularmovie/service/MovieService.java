@@ -169,10 +169,6 @@ public class MovieService extends IntentService {
                     listOfMovie.add(movie);
                 }
 
-//                for (Movie s : listOfMovie) {
-//                    Log.v(LOG_TAG, "Movie Id: " + s.getId());
-//                    Log.v(LOG_TAG, "Movie Poster URI: " + s.getPoster_path());
-//                }
             } else {
                 Log.e("Error No JSON", "listMovieJsonStr is Null");
             }
@@ -190,13 +186,6 @@ public class MovieService extends IntentService {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         for (Movie s : listOfMovie) {
-//            Log.e(LOG_TAG,s.getId());
-//            Log.e(LOG_TAG,s.getPoster_path());
-//            Log.e(LOG_TAG,s.getOverview());
-//            Log.e(LOG_TAG,df.format(s.getRelease_date()));
-//            Log.e(LOG_TAG,s.getTitle());
-//            Log.e(LOG_TAG,new Double(s.getVote_average()).toString());
-
 
             ContentValues testValues = new ContentValues();
             testValues.put(MovieContract.MovieEntry._ID, s.getId());

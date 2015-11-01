@@ -41,6 +41,7 @@
             android:exported="false"
             android:syncable="true" />
         <service android:name=".service.MovieService"/>
+        <service android:name=".service.MovieDetailService"/>
 
     </application>
 

@@ -19,7 +19,8 @@ public class MovieTrailerFragment extends Fragment implements LoaderManager.Load
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return null;
+        View rootView = inflater.inflate(R.layout.movie_trailer, container, false);
+        return rootView;
     }
 
     @Override

@@ -5,15 +5,18 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.util.Log;
 
 
 public class MovieProvider extends ContentProvider {
     // The URI Matcher used by this content provider.
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private MovieDbHelper mOpenHelper;
+    private static final String LOG_TAG = MovieProvider.class.getSimpleName();
 
     static final int MOVIE = 100;
     static final int MOVIE_HIGHEST_RATED = 101;
@@ -70,6 +73,12 @@ public class MovieProvider extends ContentProvider {
             MovieContract.MovieEntry.TABLE_NAME +
                     "." + MovieContract.MovieEntry.COLUMN_FAVORITE_FLAG + " = ? ";
 
+    //select Favourite  Movies
+    private static final String sMovieSelectionByMovieId =
+            MovieContract.MovieEntry.TABLE_NAME +
+                    "." + MovieContract.MovieEntry._ID + " = ? ";
+
+
     @Override
     public boolean onCreate() {
         mOpenHelper = new MovieDbHelper(getContext());
@@ -92,15 +101,17 @@ public class MovieProvider extends ContentProvider {
                 break;
             }
             case MOVIE_DETAILS: {
+                Log.d(LOG_TAG, "Movie Details");
                 retCursor = mOpenHelper.getReadableDatabase().query(
                         MovieContract.MovieEntry.TABLE_NAME,
                         projection,
-                        selection,
+                        sMovieSelectionByMovieId,
                         selectionArgs,
                         null,
                         null,
                         sortOrder
                 );
+                Log.d(LOG_TAG, "Count =" + retCursor.getCount());
                 break;
             }
             case MOVIE_LIST_FAVOURITE: {
@@ -241,7 +252,7 @@ public class MovieProvider extends ContentProvider {
         // content://com.popularmovie.android.appprotfolio.popularmovie/movie/favourite/add/{id}
         matcher.addURI(authority, MovieContract.PATH_MOVIE + "/favourite/add/#", MOVIE_ADD_FAVOURITE);
         // content://com.popularmovie.android.appprotfolio.popularmovie/movie/highestRated
-        matcher.addURI(authority, MovieContract.PATH_MOVIE,MOVIE);
+        matcher.addURI(authority, MovieContract.PATH_MOVIE, MOVIE);
 
         return matcher;
     }
@@ -352,6 +363,8 @@ public class MovieProvider extends ContentProvider {
     public int bulkInsert(Uri uri, ContentValues[] values) {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
+        //TODO eat the exception (SQLiteConstraintException e){
+
         int returnCount = 0;
         switch (match) {
             case MOVIE:
@@ -359,13 +372,17 @@ public class MovieProvider extends ContentProvider {
 
                 try {
                     for (ContentValues value : values) {
-                        long _id = db.insert(MovieContract.MovieEntry.TABLE_NAME, null, value);
-                        if (_id != -1) {
-                            returnCount++;
+                        try {
+                            long _id = db.insert(MovieContract.MovieEntry.TABLE_NAME, null, value);
+                            if (_id != -1) {
+                                returnCount++;
+                            }
+                        } catch (SQLiteConstraintException e) {
+                            Log.d(LOG_TAG, "SQLiteConstraintException");
                         }
                     }
                     db.setTransactionSuccessful();
-                } finally {
+                }finally {
                     db.endTransaction();
                 }
                 getContext().getContentResolver().notifyChange(uri, null);
