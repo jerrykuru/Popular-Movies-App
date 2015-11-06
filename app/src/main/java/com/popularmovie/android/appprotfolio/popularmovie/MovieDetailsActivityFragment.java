@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.popularmovie.android.appprotfolio.popularmovie.data.MovieContract;
 import com.popularmovie.android.appprotfolio.popularmovie.service.MovieDetailService;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -69,12 +70,15 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
     private TextView mReleaseDateView;
     private TextView mVoteAverageView;
 
+
     /**
      * A callback interface that all activities containing this fragment must
      * implement. This mechanism allows activities to be notified of item
      * selections.
      */
     public interface Callback {
+
+
         /**
          * DetailFragmentCallback for when an item has been selected.
          */
@@ -104,7 +108,7 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
 
         View rootView = inflater.inflate(R.layout.fragment_movie_details, container, false);
         mUri = getActivity().getIntent().getData();
-        Log.d(LOG_TAG,mUri.toString());
+        Log.d(LOG_TAG, mUri.toString());
         mMovieId = MovieContract.MovieEntry.getMovieIdFromUri(mUri);
         getMovieDetailByMovieId(mMovieId);
 
@@ -118,7 +122,7 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
 
     // Invoke the Movie Detail Service
     private void getMovieDetailByMovieId(String movieID) {
-        Log.d(LOG_TAG,"Invoking Movie Detail Service");
+        Log.d(LOG_TAG, "Invoking Movie Detail Service");
         Intent intent = new Intent(getActivity(), MovieDetailService.class);
         intent.putExtra(MovieDetailService.MOVIE_DETAIL_ID,
                 movieID);
@@ -154,7 +158,7 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
 //            Log.d(LOG_TAG,"Title ="+data.getString(COL_MOVIE_TITLE));
 //            Log.d(LOG_TAG,"COL_MOVIE_OVERVIEW ="+data.getString(COL_MOVIE_OVERVIEW));
 //            Log.d(LOG_TAG,"COL_MOVIE_RELEASE_DATE ="+data.getString(COL_MOVIE_RELEASE_DATE));
-//            Picasso.with(getContext()).load(data.getString(COL_MOVIE_POSTER_PATH)).into(mPosterView);
+            Picasso.with(getContext()).load(data.getString(COL_MOVIE_POSTER_PATH)).into(mPosterView);
             mMovieTitleView.setText(data.getString(COL_MOVIE_TITLE));
             mPlotSynopsisView.setText(data.getString(COL_MOVIE_OVERVIEW));
             String voteAverage = "/10";

@@ -1,6 +1,5 @@
 package com.popularmovie.android.appprotfolio.popularmovie;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -43,10 +42,11 @@ public class MovieDetailsActivity extends AppCompatActivity implements MainActiv
 
     @Override
     public void onItemSelected(Uri contentUri) {
-
-        Intent intent = new Intent(this, MovieDetailsActivity.class)
-                .setData(contentUri);
-        startActivity(intent);
+        //// TODO: 11/6/15
+//
+//        Intent intent = new Intent(this, MovieDetailsActivity.class)
+//                .setData(contentUri);
+//        startActivity(intent);
 
     }
 }

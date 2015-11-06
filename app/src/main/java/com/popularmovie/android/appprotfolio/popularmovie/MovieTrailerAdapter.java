@@ -7,14 +7,12 @@ import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 public class MovieTrailerAdapter extends CursorAdapter {
 
     private static final String LOG_TAG = MovieTrailerAdapter.class.getSimpleName();
+    private static final String heading = "Trailer ";
 
     public MovieTrailerAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
@@ -29,9 +27,9 @@ public class MovieTrailerAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView imageView = (TextView) view.findViewById(R.id.trailer_count);
-        String posterPath = cursor.getString(MainActivityFragment.COL_MOVIE_POSTER_PATH);
-        Picasso.with(context).load(posterPath).into(imageView);
+        TextView trailerCount = (TextView) view.findViewById(R.id.trailer_count);
+        String count = cursor.getString(MovieTrailerFragment.COL_COUNT);
+        trailerCount.setText(heading + count);
     }
 
 }

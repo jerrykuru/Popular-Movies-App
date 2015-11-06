@@ -7,9 +7,7 @@ import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-
-import com.squareup.picasso.Picasso;
+import android.widget.TextView;
 
 public class MovieReviewAdapter extends CursorAdapter {
 
@@ -28,9 +26,13 @@ public class MovieReviewAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
-        String posterPath = cursor.getString(MainActivityFragment.COL_MOVIE_POSTER_PATH);
-        Picasso.with(context).load(posterPath).into(imageView);
+        TextView authorView = (TextView) view.findViewById(R.id.review_author);
+        String author = cursor.getString(MovieReviewFragment.COL_AUTHOR);
+        authorView.setText(author);
+        TextView reviewComments = (TextView) view.findViewById(R.id.review_comments);
+        String comments = cursor.getString(MovieReviewFragment.COL_CONTENT);
+        reviewComments.setText(comments);
+
     }
 
 }

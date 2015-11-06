@@ -1,39 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:gravity="center_vertical"
-android:minHeight="?android:attr/listPreferredItemHeight"
-android:orientation="horizontal">
-
-<FrameLayout
-    android:layout_width="60dp"
-    android:layout_height="wrap_content">
-
-    <ImageView
-        android:id="@+id/list_item_icon"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@mipmap/ic_action"/>
-
-</FrameLayout>
-
-<LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_width="0dp"
-    android:layout_weight="7"
-    android:orientation="vertical">
+    android:gravity="center_vertical"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/trailer_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-condensed"
-        android:layout_gravity="center_horizontal"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:text="Trailer 1"/>
-</LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/list_item_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@mipmap/ic_action" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/trailer_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Junk"
+                android:textAppearance="?android:textAppearanceSmall" />
+        </LinearLayout>
 
 
 </LinearLayout>

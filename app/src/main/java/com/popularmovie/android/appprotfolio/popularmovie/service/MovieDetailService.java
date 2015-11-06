@@ -164,7 +164,9 @@ public class MovieDetailService extends IntentService {
                     movieTrailer.setSite(movieJSONObject.getString(MOVIE_TRAILER_SITE));
                     movieTrailer.setSize(movieJSONObject.getInt(MOVIE_TRAILER_SIZE) + "");
                     movieTrailer.setType(movieJSONObject.getString(MOVIE_TRAILER_TYPE));
+                    movieTrailer.setCount(new Integer(i).toString());
                     movieTrailer.setMovieId(movieId);
+
                     listOfMovie.add(movieTrailer);
                 }
 
@@ -295,6 +297,7 @@ public class MovieDetailService extends IntentService {
             testValues.put(MovieContract.MovieTrailerEntry.COLUMN_YOUTUBE_NAME, s.getName());
             testValues.put(MovieContract.MovieTrailerEntry.COLUMN_YOUTUBE_SIZE, s.getSize());
             testValues.put(MovieContract.MovieTrailerEntry.COLUMN_YOUTUBE_TYPE, s.getType());
+            testValues.put(MovieContract.MovieTrailerEntry.COLUMN_COUNT, s.getCount());
             cVVector.add(testValues);
         }
 

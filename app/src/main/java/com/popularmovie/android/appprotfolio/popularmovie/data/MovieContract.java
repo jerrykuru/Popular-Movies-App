@@ -152,6 +152,7 @@ public class MovieContract {
         public static final String COLUMN_YOUTUBE_SITE = "site";
         public static final String COLUMN_YOUTUBE_SIZE = "size";
         public static final String COLUMN_YOUTUBE_TYPE = "type";
+        public static final String COLUMN_COUNT = "count";
 
 
 

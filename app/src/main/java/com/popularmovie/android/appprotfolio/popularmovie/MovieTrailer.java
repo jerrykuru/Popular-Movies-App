@@ -22,6 +22,7 @@ public class MovieTrailer {
     private String size;
     private String type;
     private String movieId;
+    private String count;
 
     public String getMovieTrailerID() {
         return movieTrailerID;
@@ -33,6 +34,14 @@ public class MovieTrailer {
 
     public String getIso_639_1() {
         return iso_639_1;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
     }
 
     public void setIso_639_1(String iso_639_1) {
