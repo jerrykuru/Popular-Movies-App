@@ -34,14 +34,17 @@ public class MovieDetailService extends IntentService {
     public static final String MOVIE_DETAIL_ID = "mdi";
     private final String LOG_TAG = MovieDetailService.class.getSimpleName();
     private static final String MOVIE_TRAILER_REVIEWS_URL = "http://api.themoviedb.org/3/movie/";
-    private static final String MOVIE_TRAILER_URI_VIDEOS = "videos?";
-    private static final String MOVIE_TRAILER_URI_REVIEWS = "reviews?";
+    private static final String MOVIE_TRAILER_URI_VIDEOS = "videos";
+    private static final String MOVIE_TRAILER_URI_REVIEWS = "reviews";
     private static final String API_KEY = "api_key";
 
 
     @Override
     protected void onHandleIntent(Intent intent) {
         String movieID = intent.getStringExtra(MOVIE_DETAIL_ID);
+        Log.d(LOG_TAG,movieID);
+        getMovieTrailerForMovieId(movieID);
+        getMovieReviewsForMovieId(movieID);
     }
 
     //    Trailer - http://api.themoviedb.org/3/movie/10751/videos?api_key=
@@ -165,11 +168,11 @@ public class MovieDetailService extends IntentService {
                     listOfMovie.add(movieTrailer);
                 }
 
-                for (MovieTrailer s : listOfMovie) {
-                    Log.v(LOG_TAG, "Movie Trailer Id: " + s.getMovieTrailerID());
-                    Log.v(LOG_TAG, "Movie Id: " + s.getMovieId());
-                    Log.v(LOG_TAG, "Movie Trailer Key: " + s.getKey());
-                }
+//                for (MovieTrailer s : listOfMovie) {
+//                    Log.v(LOG_TAG, "Movie Trailer Id: " + s.getMovieTrailerID());
+//                    Log.v(LOG_TAG, "Movie Id: " + s.getMovieId());
+//                    Log.v(LOG_TAG, "Movie Trailer Key: " + s.getKey());
+//                }
             } else {
                 Log.e("Error No JSON", "listMovie Trailer JsonStr is Null");
             }
@@ -224,11 +227,11 @@ public class MovieDetailService extends IntentService {
                     listOfMovie.add(movieReviews);
                 }
 
-                for (MovieReviews s : listOfMovie) {
-                    Log.v(LOG_TAG, "Movie Trailer Id: " + s.getMovieReviewId());
-                    Log.v(LOG_TAG, "Movie Id: " + s.getMovieId());
-                    Log.v(LOG_TAG, "Movie Review Author Key: " + s.getAuthor());
-                }
+//                for (MovieReviews s : listOfMovie) {
+//                    Log.v(LOG_TAG, "Movie Trailer Id: " + s.getMovieReviewId());
+//                    Log.v(LOG_TAG, "Movie Id: " + s.getMovieId());
+//                    Log.v(LOG_TAG, "Movie Review Author Key: " + s.getAuthor());
+//                }
             } else {
                 Log.e("Error No JSON", "listMovie Review JsonStr is Null");
             }

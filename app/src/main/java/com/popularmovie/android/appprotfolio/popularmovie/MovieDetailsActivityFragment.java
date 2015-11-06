@@ -19,8 +19,6 @@ import android.widget.TextView;
 
 import com.popularmovie.android.appprotfolio.popularmovie.data.MovieContract;
 import com.popularmovie.android.appprotfolio.popularmovie.service.MovieDetailService;
-import com.popularmovie.android.appprotfolio.popularmovie.service.MovieService;
-import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -120,7 +118,8 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
 
     // Invoke the Movie Detail Service
     private void getMovieDetailByMovieId(String movieID) {
-        Intent intent = new Intent(getActivity(), MovieService.class);
+        Log.d(LOG_TAG,"Invoking Movie Detail Service");
+        Intent intent = new Intent(getActivity(), MovieDetailService.class);
         intent.putExtra(MovieDetailService.MOVIE_DETAIL_ID,
                 movieID);
         getActivity().startService(intent);
@@ -150,12 +149,12 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
         if (data != null && data.moveToFirst()) {
-            Log.d(LOG_TAG,"Count ="+data.getCount());
-            Log.d(LOG_TAG,"Poster ="+data.getString(COL_MOVIE_POSTER_PATH));
-            Log.d(LOG_TAG,"Title ="+data.getString(COL_MOVIE_TITLE));
-            Log.d(LOG_TAG,"COL_MOVIE_OVERVIEW ="+data.getString(COL_MOVIE_OVERVIEW));
-            Log.d(LOG_TAG,"COL_MOVIE_RELEASE_DATE ="+data.getString(COL_MOVIE_RELEASE_DATE));
-            Picasso.with(getContext()).load(data.getString(COL_MOVIE_POSTER_PATH)).into(mPosterView);
+//            Log.d(LOG_TAG,"Count ="+data.getCount());
+//            Log.d(LOG_TAG,"Poster ="+data.getString(COL_MOVIE_POSTER_PATH));
+//            Log.d(LOG_TAG,"Title ="+data.getString(COL_MOVIE_TITLE));
+//            Log.d(LOG_TAG,"COL_MOVIE_OVERVIEW ="+data.getString(COL_MOVIE_OVERVIEW));
+//            Log.d(LOG_TAG,"COL_MOVIE_RELEASE_DATE ="+data.getString(COL_MOVIE_RELEASE_DATE));
+//            Picasso.with(getContext()).load(data.getString(COL_MOVIE_POSTER_PATH)).into(mPosterView);
             mMovieTitleView.setText(data.getString(COL_MOVIE_TITLE));
             mPlotSynopsisView.setText(data.getString(COL_MOVIE_OVERVIEW));
             String voteAverage = "/10";

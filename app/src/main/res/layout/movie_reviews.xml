@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/list_item_forecast_textview"
+            android:id="@+id/review_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed"
@@ -21,7 +21,7 @@
             android:text="Author"/>
 
         <TextView
-            android:id="@+id/vote_average"
+            android:id="@+id/review_comments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Small Text"

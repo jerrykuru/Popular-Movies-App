@@ -1,11 +1,13 @@
 package com.popularmovie.android.appprotfolio.popularmovie;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MovieDetailsActivity extends AppCompatActivity {
+public class MovieDetailsActivity extends AppCompatActivity implements MainActivityFragment.Callback {
 
     private static final String LOG_TAG = MovieDetailsActivity.class.getSimpleName();
 
@@ -37,5 +39,14 @@ public class MovieDetailsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemSelected(Uri contentUri) {
+
+        Intent intent = new Intent(this, MovieDetailsActivity.class)
+                .setData(contentUri);
+        startActivity(intent);
+
     }
 }

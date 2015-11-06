@@ -1,15 +1,23 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'Jerry'
+            keyPassword 'home123'
+            storeFile file('/Users/binu/binu.jks')
+            storePassword 'home123'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
-
     defaultConfig {
         applicationId "com.popularmovie.android.appprotfolio.popularmovie"
         minSdkVersion 10
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
@@ -20,12 +28,14 @@ android {
     buildTypes.each {
         it.buildConfigField 'String', 'Movie_API_KEY', '"7c5abefc53acec71067d4859c75dbd0f"'
     }
+    productFlavors {
+    }
 }
 repositories {
     mavenCentral()
 }
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:support-v4:23.0.1'

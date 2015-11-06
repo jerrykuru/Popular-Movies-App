@@ -9,6 +9,7 @@
     <string name="title_activity_movie_details">MovieDetailsActivity</string>
     <string name="content_authority">com.popularmovie.android.appprotfolio.popularmovie</string>
     <string name="bus_pg">bus_pg</string>
+    <string name="trailer_Fragment_heading">Trailer</string>
 
 
 </resources>

@@ -253,6 +253,8 @@ public class MovieProvider extends ContentProvider {
         matcher.addURI(authority, MovieContract.PATH_MOVIE + "/favourite/add/#", MOVIE_ADD_FAVOURITE);
         // content://com.popularmovie.android.appprotfolio.popularmovie/movie/highestRated
         matcher.addURI(authority, MovieContract.PATH_MOVIE, MOVIE);
+        matcher.addURI(authority, MovieContract.PATH_TRAILER, MOVIE_TRAILER);
+        matcher.addURI(authority, MovieContract.PATH_REVIEW, MOVIE_REVIEW);
 
         return matcher;
     }
