@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.util.Log;
 
 
 public class MovieProvider extends ContentProvider {
@@ -110,7 +109,6 @@ public class MovieProvider extends ContentProvider {
                 break;
             }
             case MOVIE_DETAILS: {
-                Log.d(LOG_TAG, "Movie Details");
                 retCursor = mOpenHelper.getReadableDatabase().query(
                         MovieContract.MovieEntry.TABLE_NAME,
                         projection,
@@ -120,7 +118,6 @@ public class MovieProvider extends ContentProvider {
                         null,
                         sortOrder
                 );
-                Log.d(LOG_TAG, "Count =" + retCursor.getCount());
                 break;
             }
             case MOVIE_LIST_FAVOURITE: {
@@ -350,7 +347,7 @@ public class MovieProvider extends ContentProvider {
 
         switch (match) {
             case MOVIE:
-                rowsUpdated = db.update(MovieContract.MovieEntry.TABLE_NAME, values, selection,
+                rowsUpdated = db.update(MovieContract.MovieEntry.TABLE_NAME, values, sMovieSelectionByMovieId,
                         selectionArgs);
                 break;
             case MOVIE_REVIEW:

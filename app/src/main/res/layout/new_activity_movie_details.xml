@@ -12,6 +12,19 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#2d2716" />
+
+    <TextView
+        android:id="@+id/heading_trailer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/trailer_Fragment_heading"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
     <fragment android:name="com.popularmovie.android.appprotfolio.popularmovie.MovieTrailerFragment"
         android:id="@+id/movie_trailer"
         android:layout_weight="1"
@@ -22,6 +35,13 @@
         android:layout_width="match_parent"
         android:layout_height="1dip"
         android:background="#2d2716" />
+    <TextView
+        android:id="@+id/heading_reviews1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/review_Fragment_heading"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
 
     <fragment android:name="com.popularmovie.android.appprotfolio.popularmovie.MovieReviewFragment"
         android:id="@+id/movie_reviews"

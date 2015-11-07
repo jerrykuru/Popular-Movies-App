@@ -4,13 +4,17 @@
     <string name="action_settings">Settings</string>
     <string name="movie_sort_popular">"Most Popular"</string>
     <string name="movie_sort_highest_rated">"Highest Rated"</string>
+    <string name="movie_sort_favourite">"My Favourite"</string>
     <string name="movie_sort_key">"movieListingChoice"</string>
     <string name="movie_sort_key_default">"Most Popular"</string>
     <string name="title_activity_movie_details">MovieDetailsActivity</string>
     <string name="content_authority">com.popularmovie.android.appprotfolio.popularmovie</string>
     <string name="bus_pg">bus_pg</string>
+    <string name="favorite_button">MARK AS FAVORITE</string>
     <string name="trailer_Fragment_heading">Trailer</string>
+    <string name="review_Fragment_heading">Reviews</string>
     <string name="poster">movie</string>
+    <string name="favorite_movieId">movieId</string>
 
 
 </resources>

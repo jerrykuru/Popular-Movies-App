@@ -3,8 +3,10 @@ package com.popularmovie.android.appprotfolio.popularmovie;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class MovieDetailsActivity extends AppCompatActivity implements MainActivityFragment.Callback {
 
@@ -47,6 +49,18 @@ public class MovieDetailsActivity extends AppCompatActivity implements MainActiv
 //        Intent intent = new Intent(this, MovieDetailsActivity.class)
 //                .setData(contentUri);
 //        startActivity(intent);
+
+    }
+
+
+    // Favorite button click
+    public void addMovieAsFavorite(View view) {
+        // Do something in response to button click
+        Log.d(LOG_TAG, "i did cilck and the movie id is="+ view.getTag(R.string.favorite_movieId));
+        // Get the fragment and invoke a method on the framgement that will add the movie as favorite
+        String movieID =  view.getTag(R.string.favorite_movieId).toString();
+        MovieDetailsActivityFragment movieDetailsActivityFragment = (MovieDetailsActivityFragment)getSupportFragmentManager().findFragmentById(R.id.movie_details);
+        movieDetailsActivityFragment.addMovieAsFavorite(movieID);
 
     }
 }

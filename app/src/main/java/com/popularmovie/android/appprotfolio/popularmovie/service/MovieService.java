@@ -50,7 +50,7 @@ public class MovieService extends IntentService {
         String listMovieJsonStr = null;
         MovieSelection movieSelection = new MovieSelection();
 
-        if (movieSortSelection != null) {
+        if ((movieSortSelection != null) && !(movieSortSelection.equalsIgnoreCase(SelectionType.Favourite.getSortType()))) {
             URL url = null;
             if (movieSortSelection.equalsIgnoreCase(SelectionType.HighestRated.getSortType())) {
                 url = buildUrlHighestRatedMovies(movieSelection.getPage());
@@ -60,6 +60,7 @@ public class MovieService extends IntentService {
                 url = buildUrlPopularMovies(movieSelection.getPage());
                 movieSelection.setSelectionType(SelectionType.Popular);
             }
+
             listMovieJsonStr = new HttpUtility().talkToOutsideWorld(url);
             addMovieToDatabase(getMovieListingFromJson(listMovieJsonStr), movieSelection);
         }

@@ -82,7 +82,7 @@ public class MovieContract {
         }
 
         public static Uri buildAddFavouriteMoviesUri(long movieID) {
-            return CONTENT_URI.buildUpon().appendPath(MOVIE_FAVOURITE).appendPath(MOVIE_ADD_FAVOURITE).appendPath(Math.round(movieID)+"").build();
+           return CONTENT_URI.buildUpon().appendPath(MOVIE_FAVOURITE).appendPath(MOVIE_ADD_FAVOURITE).appendPath(Math.round(movieID)+"").build();
         }
 
         public static Uri buildMovieUri(long id) {

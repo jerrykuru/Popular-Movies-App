@@ -1,7 +1,9 @@
 package com.popularmovie.android.appprotfolio.popularmovie;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -69,6 +72,32 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
     private TextView mPlotSynopsisView;
     private TextView mReleaseDateView;
     private TextView mVoteAverageView;
+    private  Button mButton;
+
+    public void addMovieAsFavorite(String movieID) {
+
+        Uri uri = MovieContract.MovieEntry.buildMovieUri(new Long(movieID));
+        Cursor movieCursor = getActivity().getContentResolver().query(
+                uri,
+                MOVIE_COLUMNS,
+                null,
+                new String[]{movieID},
+                null
+        );
+        ContentValues testValues = new ContentValues();
+        movieCursor.moveToFirst();
+        DatabaseUtils.cursorRowToContentValues(movieCursor, testValues);
+        uri = MovieContract.MovieEntry.CONTENT_URI;
+        testValues.remove(MovieContract.MovieEntry.COLUMN_FAVORITE_FLAG);
+        testValues.put(MovieContract.MovieEntry.COLUMN_FAVORITE_FLAG, "true");
+        int movieTrailerCursor = getActivity().getContentResolver().update(
+                uri,
+                testValues,
+                null,
+                new String[]{movieID}
+        );
+        movieCursor.close();
+    }
 
 
     /**
@@ -111,12 +140,13 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
         Log.d(LOG_TAG, mUri.toString());
         mMovieId = MovieContract.MovieEntry.getMovieIdFromUri(mUri);
         getMovieDetailByMovieId(mMovieId);
-
         mPosterView = (ImageView) rootView.findViewById(R.id.poster);
         mMovieTitleView = (TextView) rootView.findViewById(R.id.movie_title);
         mPlotSynopsisView = (TextView) rootView.findViewById(R.id.plot_synopsis);
         mReleaseDateView = (TextView) rootView.findViewById(R.id.release_date);
         mVoteAverageView = (TextView) rootView.findViewById(R.id.vote_average);
+        mButton = (Button) rootView.findViewById(R.id.addMovieAsFavorite);
+        mButton.setTag(R.string.favorite_movieId,mMovieId);
         return rootView;
     }
 
@@ -134,7 +164,6 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         if (null != mUri) {
 
-            Log.d(LOG_TAG, "Calling Cursor Movie with MoveId");
             // Now create and return a CursorLoader that will take care of
             // creating a Cursor for the data being displayed.
             return new CursorLoader(
@@ -153,12 +182,7 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
         if (data != null && data.moveToFirst()) {
-//            Log.d(LOG_TAG,"Count ="+data.getCount());
-//            Log.d(LOG_TAG,"Poster ="+data.getString(COL_MOVIE_POSTER_PATH));
-//            Log.d(LOG_TAG,"Title ="+data.getString(COL_MOVIE_TITLE));
-//            Log.d(LOG_TAG,"COL_MOVIE_OVERVIEW ="+data.getString(COL_MOVIE_OVERVIEW));
-//            Log.d(LOG_TAG,"COL_MOVIE_RELEASE_DATE ="+data.getString(COL_MOVIE_RELEASE_DATE));
-            Picasso.with(getContext()).load(data.getString(COL_MOVIE_POSTER_PATH)).into(mPosterView);
+           Picasso.with(getContext()).load(data.getString(COL_MOVIE_POSTER_PATH)).into(mPosterView);
             mMovieTitleView.setText(data.getString(COL_MOVIE_TITLE));
             mPlotSynopsisView.setText(data.getString(COL_MOVIE_OVERVIEW));
             String voteAverage = "/10";
@@ -181,4 +205,6 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
     }
+
+
 }

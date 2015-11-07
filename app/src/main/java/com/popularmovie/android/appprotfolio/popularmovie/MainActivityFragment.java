@@ -142,6 +142,10 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             movieSelectionUri =  MovieContract.MovieEntry.buildListOfPopularMovies();
             Log.d(LOG_TAG,"Popular");
         }
+        if (movieSortSelection.equalsIgnoreCase(SelectionType.Favourite.getSortType())) {
+            movieSelectionUri =  MovieContract.MovieEntry.buildListFavouriteMoviesUri();
+            Log.d(LOG_TAG,"Favourite");
+        }
 
         return new CursorLoader(getActivity(),
                 movieSelectionUri,
