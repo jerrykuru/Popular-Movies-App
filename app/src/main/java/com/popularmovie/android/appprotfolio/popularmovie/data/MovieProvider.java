@@ -317,15 +317,15 @@ public class MovieProvider extends ContentProvider {
         switch (match) {
             case MOVIE:
                 rowsDeleted = db.delete(
-                        MovieContract.MovieEntry.TABLE_NAME, selection, selectionArgs);
+                        MovieContract.MovieEntry.TABLE_NAME, sMovieSelectionByMovieId, selectionArgs);
                 break;
             case MOVIE_REVIEW:
                 rowsDeleted = db.delete(
-                        MovieContract.MovieReviewEntry.TABLE_NAME, selection, selectionArgs);
+                        MovieContract.MovieReviewEntry.TABLE_NAME, sMovieReviewSelectionByReviewId, selectionArgs);
                 break;
             case MOVIE_TRAILER:
                 rowsDeleted = db.delete(
-                        MovieContract.MovieTrailerEntry.TABLE_NAME, selection, selectionArgs);
+                        MovieContract.MovieTrailerEntry.TABLE_NAME, sMovieSelectionByTrailerId, selectionArgs);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -351,11 +351,11 @@ public class MovieProvider extends ContentProvider {
                         selectionArgs);
                 break;
             case MOVIE_REVIEW:
-                rowsUpdated = db.update(MovieContract.MovieReviewEntry.TABLE_NAME, values, selection,
+                rowsUpdated = db.update(MovieContract.MovieReviewEntry.TABLE_NAME, values, sMovieReviewSelectionByReviewId,
                         selectionArgs);
                 break;
             case MOVIE_TRAILER:
-                rowsUpdated = db.update(MovieContract.MovieTrailerEntry.TABLE_NAME, values, selection,
+                rowsUpdated = db.update(MovieContract.MovieTrailerEntry.TABLE_NAME, values, sMovieSelectionByTrailerId,
                         selectionArgs);
                 break;
             default:
