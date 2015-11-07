@@ -32,6 +32,7 @@ public class MovieTrailerAdapter extends CursorAdapter {
         String count = cursor.getString(MovieTrailerFragment.COL_COUNT);
         trailerCount.setText(heading + count);
         Log.d(LOG_TAG,heading + count);
+        // Construct the url and attach it to view tag 
     }
 
 }
