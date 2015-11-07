@@ -4,6 +4,7 @@ package com.popularmovie.android.appprotfolio.popularmovie;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class MovieTrailerAdapter extends CursorAdapter {
         TextView trailerCount = (TextView) view.findViewById(R.id.trailer_count);
         String count = cursor.getString(MovieTrailerFragment.COL_COUNT);
         trailerCount.setText(heading + count);
+        Log.d(LOG_TAG,heading + count);
     }
 
 }

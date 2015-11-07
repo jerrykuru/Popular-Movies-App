@@ -3,92 +3,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.popularmovie.android.appprotfolio.popularmovie.MovieDetailsActivityFragment">
 
-    <LinearLayout
+
+    <TextView
+        android:id="@+id/movie_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/movie_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#31c2ac"
-            android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#ffffff"
-            android:textSize="62sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+        android:background="#31c2ac"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#ffffff"
+        android:textSize="62sp"
+        android:textStyle="bold" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:paddingTop="@dimen/activity_vertical_margin"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
-        android:layout_weight="1"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/poster"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:layout_weight="1"
-            android:scaleType="fitCenter"
-            android:contentDescription="@string/poster" />
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/release_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Medium Text"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
                 android:id="@+id/vote_average"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Small Text"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <Button xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/addMovieAsFavorite"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:text="@string/favorite_button"
+                android:background="#42ffd2"
                 android:onClick="addMovieAsFavorite"
-                android:background="#24ffdf"
+                android:text="@string/favorite_button"
                 android:textColor="#4f0f1a0b" />
 
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/plot_synopsis"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/plot_synopsis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Small Text"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-    </LinearLayout>
-
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
 </LinearLayout>

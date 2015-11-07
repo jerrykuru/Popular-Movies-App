@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -77,7 +76,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                              Bundle savedInstanceState) {
         mMovieAdapter = new MovieAdapter(getActivity(), null, 0);
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        getMovieListByPreference();
+     //   getMovieListByPreference();
         GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
         gridview.setAdapter(mMovieAdapter);
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -136,15 +135,12 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
         if (movieSortSelection.equalsIgnoreCase(SelectionType.HighestRated.getSortType())) {
             movieSelectionUri =  MovieContract.MovieEntry.buildListOfHighestRatedMovies();
-            Log.d(LOG_TAG,"Highest Rated");
-        }
+       }
         if (movieSortSelection.equalsIgnoreCase(SelectionType.Popular.getSortType())) {
             movieSelectionUri =  MovieContract.MovieEntry.buildListOfPopularMovies();
-            Log.d(LOG_TAG,"Popular");
         }
         if (movieSortSelection.equalsIgnoreCase(SelectionType.Favourite.getSortType())) {
             movieSelectionUri =  MovieContract.MovieEntry.buildListFavouriteMoviesUri();
-            Log.d(LOG_TAG,"Favourite");
         }
 
         return new CursorLoader(getActivity(),
@@ -170,6 +166,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        getMovieListByPreference();
         getLoaderManager().initLoader(MOVIE_LOADER, null, this);
         super.onActivityCreated(savedInstanceState);
     }

@@ -3,7 +3,10 @@ package com.popularmovie.android.appprotfolio.popularmovie.service;
 
 import android.app.IntentService;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
 
@@ -49,20 +52,21 @@ public class MovieService extends IntentService {
         // Will contain the raw JSON response as a string.
         String listMovieJsonStr = null;
         MovieSelection movieSelection = new MovieSelection();
+        if (isNetworkAvailable()) {
+            if ((movieSortSelection != null) && !(movieSortSelection.equalsIgnoreCase(SelectionType.Favourite.getSortType()))) {
+                URL url = null;
+                if (movieSortSelection.equalsIgnoreCase(SelectionType.HighestRated.getSortType())) {
+                    url = buildUrlHighestRatedMovies(movieSelection.getPage());
+                    movieSelection.setSelectionType(SelectionType.HighestRated);
+                }
+                if (movieSortSelection.equalsIgnoreCase(SelectionType.Popular.getSortType())) {
+                    url = buildUrlPopularMovies(movieSelection.getPage());
+                    movieSelection.setSelectionType(SelectionType.Popular);
+                }
 
-        if ((movieSortSelection != null) && !(movieSortSelection.equalsIgnoreCase(SelectionType.Favourite.getSortType()))) {
-            URL url = null;
-            if (movieSortSelection.equalsIgnoreCase(SelectionType.HighestRated.getSortType())) {
-                url = buildUrlHighestRatedMovies(movieSelection.getPage());
-                movieSelection.setSelectionType(SelectionType.HighestRated);
+                listMovieJsonStr = new HttpUtility().talkToOutsideWorld(url);
+                addMovieToDatabase(getMovieListingFromJson(listMovieJsonStr), movieSelection);
             }
-            if (movieSortSelection.equalsIgnoreCase(SelectionType.Popular.getSortType())) {
-                url = buildUrlPopularMovies(movieSelection.getPage());
-                movieSelection.setSelectionType(SelectionType.Popular);
-            }
-
-            listMovieJsonStr = new HttpUtility().talkToOutsideWorld(url);
-            addMovieToDatabase(getMovieListingFromJson(listMovieJsonStr), movieSelection);
         }
 
     }
@@ -207,11 +211,19 @@ public class MovieService extends IntentService {
         if (cVVector.size() > 0) {
             ContentValues[] cvArray = new ContentValues[cVVector.size()];
             cVVector.toArray(cvArray);
-           int numberOfRecordsInserted =  this.getContentResolver().bulkInsert(MovieContract.MovieEntry.CONTENT_URI, cvArray);
+            int numberOfRecordsInserted = this.getContentResolver().bulkInsert(MovieContract.MovieEntry.CONTENT_URI, cvArray);
             Log.d(LOG_TAG, "Movie Service Complete. " + numberOfRecordsInserted + " Inserted");
         }
 
 
     }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
 
 }
