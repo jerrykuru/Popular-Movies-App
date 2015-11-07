@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -50,5 +51,14 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
                 .setData(contentUri);
         startActivity(intent);
 
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(LOG_TAG,"On Resume");
+        MainActivityFragment mainActivityFragment = (MainActivityFragment)getSupportFragmentManager().findFragmentById(R.id.main_fragment);
+        mainActivityFragment.onMovieSelectionPreferenceChange();
     }
 }

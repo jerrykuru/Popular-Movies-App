@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -128,10 +129,22 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Uri weatherForLocationUri = MovieContract.MovieEntry.buildListOfPopularMovies();
+
+        Uri movieSelectionUri = null;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String movieSortSelection = prefs.getString(getString(R.string.movie_sort_key), getString(R.string.movie_sort_key_default));
+
+        if (movieSortSelection.equalsIgnoreCase(SelectionType.HighestRated.getSortType())) {
+            movieSelectionUri =  MovieContract.MovieEntry.buildListOfHighestRatedMovies();
+            Log.d(LOG_TAG,"Highest Rated");
+        }
+        if (movieSortSelection.equalsIgnoreCase(SelectionType.Popular.getSortType())) {
+            movieSelectionUri =  MovieContract.MovieEntry.buildListOfPopularMovies();
+            Log.d(LOG_TAG,"Popular");
+        }
 
         return new CursorLoader(getActivity(),
-                weatherForLocationUri,
+                movieSelectionUri,
                 MOVIE_COLUMNS,
                 null,
                 null,
@@ -157,8 +170,11 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         super.onActivityCreated(savedInstanceState);
     }
 
-    //TODO
+    /**
+     * Called by Activity on Resume from back stack
+     */
     void onMovieSelectionPreferenceChange() {
+        getMovieListByPreference();
         getLoaderManager().restartLoader(MOVIE_LOADER, null, this);
     }
 }
