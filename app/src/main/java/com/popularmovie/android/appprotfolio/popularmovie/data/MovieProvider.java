@@ -5,7 +5,6 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
@@ -73,10 +72,20 @@ public class MovieProvider extends ContentProvider {
             MovieContract.MovieEntry.TABLE_NAME +
                     "." + MovieContract.MovieEntry.COLUMN_FAVORITE_FLAG + " = ? ";
 
-    //select Favourite  Movies
+    //select by Movie ID
     private static final String sMovieSelectionByMovieId =
             MovieContract.MovieEntry.TABLE_NAME +
                     "." + MovieContract.MovieEntry._ID + " = ? ";
+
+    //select by REVIEW_ID
+    private static final String sMovieReviewSelectionByReviewId =
+            MovieContract.MovieReviewEntry.TABLE_NAME +
+                    "." +MovieContract.MovieReviewEntry._ID + " = ? ";
+
+    //select by TRAILER_ID
+    private static final String sMovieSelectionByTrailerId =
+            MovieContract.MovieTrailerEntry.TABLE_NAME +
+                    "." + MovieContract.MovieTrailerEntry._ID + " = ? ";
 
 
     @Override
@@ -363,28 +372,37 @@ public class MovieProvider extends ContentProvider {
 
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
+
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
-        //TODO eat the exception (SQLiteConstraintException e){
-
         int returnCount = 0;
+
         switch (match) {
             case MOVIE:
                 db.beginTransaction();
-
                 try {
                     for (ContentValues value : values) {
-                        try {
+                        String movieId = value.getAsString(MovieContract.MovieEntry._ID);
+                        String[] selection = new String[]{movieId};
+                        Cursor isMoviePresentCusor = mOpenHelper.getReadableDatabase().query(
+                                MovieContract.MovieEntry.TABLE_NAME,
+                                null,
+                                sMovieSelectionByMovieId,
+                                selection,
+                                null,
+                                null,
+                                null
+                        );
+                        if (isMoviePresentCusor.getCount() == 0) {
                             long _id = db.insert(MovieContract.MovieEntry.TABLE_NAME, null, value);
                             if (_id != -1) {
                                 returnCount++;
                             }
-                        } catch (SQLiteConstraintException e) {
-                            Log.d(LOG_TAG, "SQLiteConstraintException");
                         }
+
                     }
                     db.setTransactionSuccessful();
-                }finally {
+                } finally {
                     db.endTransaction();
                 }
                 getContext().getContentResolver().notifyChange(uri, null);
@@ -393,9 +411,22 @@ public class MovieProvider extends ContentProvider {
                 db.beginTransaction();
                 try {
                     for (ContentValues value : values) {
-                        long _id = db.insert(MovieContract.MovieReviewEntry.TABLE_NAME, null, value);
-                        if (_id != -1) {
-                            returnCount++;
+                        String reviewId = value.getAsString(MovieContract.MovieReviewEntry._ID);
+                        String[] selection = new String[]{reviewId};
+                        Cursor isMovieReviewPresentCusor = mOpenHelper.getReadableDatabase().query(
+                                MovieContract.MovieReviewEntry.TABLE_NAME,
+                                null,
+                                sMovieReviewSelectionByReviewId,
+                                selection,
+                                null,
+                                null,
+                                null
+                        );
+                        if (isMovieReviewPresentCusor.getCount() == 0) {
+                            long _id = db.insert(MovieContract.MovieReviewEntry.TABLE_NAME, null, value);
+                            if (_id != -1) {
+                                returnCount++;
+                            }
                         }
                     }
                     db.setTransactionSuccessful();
@@ -408,9 +439,23 @@ public class MovieProvider extends ContentProvider {
                 db.beginTransaction();
                 try {
                     for (ContentValues value : values) {
-                        long _id = db.insert(MovieContract.MovieTrailerEntry.TABLE_NAME, null, value);
-                        if (_id != -1) {
-                            returnCount++;
+                        String trailerId = value.getAsString(MovieContract.MovieTrailerEntry._ID);
+                        String[] selection = new String[]{trailerId};
+                        Cursor isMovieTrailerPresentCusor = mOpenHelper.getReadableDatabase().query(
+                                MovieContract.MovieTrailerEntry.TABLE_NAME,
+                                null,
+                                sMovieSelectionByTrailerId,
+                                selection,
+                                null,
+                                null,
+                                null
+                        );
+                        if (isMovieTrailerPresentCusor.getCount() == 0) {
+
+                            long _id = db.insert(MovieContract.MovieTrailerEntry.TABLE_NAME, null, value);
+                            if (_id != -1) {
+                                returnCount++;
+                            }
                         }
                     }
                     db.setTransactionSuccessful();

@@ -42,13 +42,10 @@ public class MovieDetailService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         String movieID = intent.getStringExtra(MOVIE_DETAIL_ID);
-        Log.d(LOG_TAG,movieID);
         getMovieTrailerForMovieId(movieID);
         getMovieReviewsForMovieId(movieID);
     }
 
-    //    Trailer - http://api.themoviedb.org/3/movie/10751/videos?api_key=
-   //    Reviews - http://api.themoviedb.org/3/movie/135397/reviews?api_key=
     private void getMovieTrailerForMovieId(String movieId) {
         String jsonStr = new HttpUtility().talkToOutsideWorld(buildUrlMoviesTrailer(movieId));
         addMovieTrailerToDatabase(getMovieTrailerFromJson(jsonStr, movieId));
@@ -59,14 +56,6 @@ public class MovieDetailService extends IntentService {
         addMovieReviewToDatabase(getMovieReviewsFromJson(jsonStr, movieId));
     }
 
-    /**
-     * movie Reviews
-     * <p>
-     * URL:  http://api.themoviedb.org/3/movie/10751/reviews?api_key=
-     *
-     * @param movieId
-     * @return
-     */
     private URL buildUrlMoviesReviews(String movieId) {
 
         URL url = null;
@@ -87,14 +76,6 @@ public class MovieDetailService extends IntentService {
     }
 
 
-    /**
-     * movie Trailer
-     * <p>
-     * URL:  http://api.themoviedb.org/3/movie/10751/videos?api_key=
-     *
-     * @param movieId
-     * @return
-     */
     private URL buildUrlMoviesTrailer(String movieId) {
 
         URL url = null;
@@ -106,7 +87,6 @@ public class MovieDetailService extends IntentService {
                     .appendQueryParameter(API_KEY, MovieConstants.ApiKey)
                     .build();
             url = new URL(builtUri.toString());
-            Log.v(LOG_TAG, builtUri.toString());
         } catch (MalformedURLException e) {
             Log.e(LOG_TAG, "Error ", e);
             return null;
@@ -118,7 +98,7 @@ public class MovieDetailService extends IntentService {
     /**
      * Take the String representing the complete Movie Trailer in JSON Format and
      * pull out the data we need to construct the Strings needed for the wireframes.
-     * <p>
+     * <p/>
      * Fortunately parsing is easy:  constructor takes the JSON string and converts it
      * into an Object hierarchy for us.
      */
@@ -127,7 +107,6 @@ public class MovieDetailService extends IntentService {
         List<MovieTrailer> listOfMovie = new ArrayList<MovieTrailer>();
         try {
             if (jsonStr != null) {
-                // These are the names of the JSON objects that need to be extracted.
                 final String MOVIE_TRAILER_LIST = "results";
                 final String MOVIE_TRAILER_ISO = "iso_639_1";
                 final String MOVIE_TRAILER_KEY = "key";
@@ -136,23 +115,8 @@ public class MovieDetailService extends IntentService {
                 final String MOVIE_TRAILER_SIZE = "size";
                 final String MOVIE_TRAILER_TYPE = "type";
                 final String MOVIE_TRAILER_ID = "id";
-
-
-                /**
-                 * Sample Response
-                 * --------------------
-                 * "id": "54282ba2c3a3680b1b002905",
-                 "iso_639_1": "en",
-                 "key": "NuUnJ5WL1g",
-                 "name": "Trailer",
-                 "site": "YouTube",
-                 "size": 360,
-                 "type": "Trailer"
-                 */
-
                 JSONObject movieJson = new JSONObject(jsonStr);
                 JSONArray movieArray = movieJson.getJSONArray(MOVIE_TRAILER_LIST);
-
                 for (int i = 0; i < movieArray.length(); i++) {
                     // Get the JSON object representing a Movie
                     JSONObject movieJSONObject = movieArray.getJSONObject(i);
@@ -169,12 +133,6 @@ public class MovieDetailService extends IntentService {
 
                     listOfMovie.add(movieTrailer);
                 }
-
-//                for (MovieTrailer s : listOfMovie) {
-//                    Log.v(LOG_TAG, "Movie Trailer Id: " + s.getMovieTrailerID());
-//                    Log.v(LOG_TAG, "Movie Id: " + s.getMovieId());
-//                    Log.v(LOG_TAG, "Movie Trailer Key: " + s.getKey());
-//                }
             } else {
                 Log.e("Error No JSON", "listMovie Trailer JsonStr is Null");
             }
@@ -188,7 +146,7 @@ public class MovieDetailService extends IntentService {
     /**
      * Take the String representing the complete Movie Reviews in JSON Format and
      * pull out the data we need to construct the Strings needed for the wireframes.
-     * <p>
+     * <p/>
      * Fortunately parsing is easy:  constructor takes the JSON string and converts it
      * into an Object hierarchy for us.
      */
@@ -203,22 +161,9 @@ public class MovieDetailService extends IntentService {
                 final String MOVIE_REVIEWS_CONTENT = "content";
                 final String MOVIE_REVIEWS_URL = "url";
                 final String MOVIE_REVIEWS_ID = "id";
-
-
-                /**
-                 * Sample Response
-                 * --------------------
-                 *  "id": "55910381c3a36807f900065d",
-                 "author": "jonlikesmoviesthatdontsuck",
-                 "content": "I was a huge fan of the original 3 movies
-                 "url": "http://j.mp/1GHgSxi"
-                 */
-
                 JSONObject movieJson = new JSONObject(jsonStr);
                 JSONArray movieArray = movieJson.getJSONArray(MOVIE_REVIEWS_LIST);
-
                 for (int i = 0; i < movieArray.length(); i++) {
-                    // Get the JSON object representing a Movie
                     JSONObject movieJSONObject = movieArray.getJSONObject(i);
                     MovieReviews movieReviews = new MovieReviews();
                     movieReviews.setMovieReviewId(movieJSONObject.getString(MOVIE_REVIEWS_ID));
@@ -228,12 +173,6 @@ public class MovieDetailService extends IntentService {
                     movieReviews.setMovieId(movieId);
                     listOfMovie.add(movieReviews);
                 }
-
-//                for (MovieReviews s : listOfMovie) {
-//                    Log.v(LOG_TAG, "Movie Trailer Id: " + s.getMovieReviewId());
-//                    Log.v(LOG_TAG, "Movie Id: " + s.getMovieId());
-//                    Log.v(LOG_TAG, "Movie Review Author Key: " + s.getAuthor());
-//                }
             } else {
                 Log.e("Error No JSON", "listMovie Review JsonStr is Null");
             }
@@ -252,10 +191,6 @@ public class MovieDetailService extends IntentService {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         for (MovieReviews s : listOfMovie) {
-            Log.e(LOG_TAG, s.getMovieReviewId());
-            Log.e(LOG_TAG, s.getMovieId());
-            Log.e(LOG_TAG, s.getAuthor());
-            Log.e(LOG_TAG, s.getContent());
             ContentValues testValues = new ContentValues();
             testValues.put(MovieContract.MovieReviewEntry._ID, s.getMovieReviewId());
             testValues.put(MovieContract.MovieReviewEntry.COLUMN_MOVIE_KEY, s.getMovieId());
@@ -263,17 +198,13 @@ public class MovieDetailService extends IntentService {
             testValues.put(MovieContract.MovieReviewEntry.COLUMN_CONTENT, s.getContent());
             cVVector.add(testValues);
         }
-
-
-        int inserted = 0;
         // add to database
         if (cVVector.size() > 0) {
             ContentValues[] cvArray = new ContentValues[cVVector.size()];
             cVVector.toArray(cvArray);
-            this.getContentResolver().bulkInsert(MovieContract.MovieReviewEntry.CONTENT_URI, cvArray);
+            int numberOfRecordsInserted = this.getContentResolver().bulkInsert(MovieContract.MovieReviewEntry.CONTENT_URI, cvArray);
+            Log.d(LOG_TAG, "Movie Detail Review Service Complete. " + numberOfRecordsInserted + " Inserted");
         }
-
-        Log.d(LOG_TAG, "Movie Detail Review Service Complete. " + cVVector.size() + " Inserted");
     }
 
     private void addMovieTrailerToDatabase(List<MovieTrailer> listOfMovie) {
@@ -281,13 +212,7 @@ public class MovieDetailService extends IntentService {
         // Insert the new movie review information into the database
         Vector<ContentValues> cVVector = new Vector<ContentValues>(listOfMovie.size());
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
-
         for (MovieTrailer s : listOfMovie) {
-            Log.e(LOG_TAG, s.getMovieTrailerID());
-            Log.e(LOG_TAG, s.getMovieId());
-            Log.e(LOG_TAG, s.getKey());
-            Log.e(LOG_TAG, s.getSite());
             ContentValues testValues = new ContentValues();
             testValues.put(MovieContract.MovieTrailerEntry._ID, s.getMovieTrailerID());
             testValues.put(MovieContract.MovieTrailerEntry.COLUMN_MOVIE_KEY, s.getMovieId());
@@ -300,17 +225,12 @@ public class MovieDetailService extends IntentService {
             testValues.put(MovieContract.MovieTrailerEntry.COLUMN_COUNT, s.getCount());
             cVVector.add(testValues);
         }
-
-
-        int inserted = 0;
-        // add to database
         if (cVVector.size() > 0) {
             ContentValues[] cvArray = new ContentValues[cVVector.size()];
             cVVector.toArray(cvArray);
-            this.getContentResolver().bulkInsert(MovieContract.MovieTrailerEntry.CONTENT_URI, cvArray);
+            int numberOfRecordsInserted = this.getContentResolver().bulkInsert(MovieContract.MovieTrailerEntry.CONTENT_URI, cvArray);
+            Log.d(LOG_TAG, "Movie MovieTrailerEntry Service Complete. " + numberOfRecordsInserted + " Inserted");
         }
-
-        Log.d(LOG_TAG, "Movie MovieTrailerEntry Service Complete. " + cVVector.size() + " Inserted");
     }
 
 }

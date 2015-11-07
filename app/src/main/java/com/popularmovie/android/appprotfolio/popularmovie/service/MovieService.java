@@ -206,10 +206,11 @@ public class MovieService extends IntentService {
         if (cVVector.size() > 0) {
             ContentValues[] cvArray = new ContentValues[cVVector.size()];
             cVVector.toArray(cvArray);
-            this.getContentResolver().bulkInsert(MovieContract.MovieEntry.CONTENT_URI, cvArray);
+           int numberOfRecordsInserted =  this.getContentResolver().bulkInsert(MovieContract.MovieEntry.CONTENT_URI, cvArray);
+            Log.d(LOG_TAG, "Movie Service Complete. " + numberOfRecordsInserted + " Inserted");
         }
 
-        Log.d(LOG_TAG, "Movie Service Complete. " + cVVector.size() + " Inserted");
+
     }
 
 }
