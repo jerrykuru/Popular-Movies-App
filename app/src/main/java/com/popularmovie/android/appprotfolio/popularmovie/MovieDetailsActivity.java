@@ -1,14 +1,13 @@
 package com.popularmovie.android.appprotfolio.popularmovie;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class MovieDetailsActivity extends AppCompatActivity implements MainActivityFragment.Callback {
+public class MovieDetailsActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MovieDetailsActivity.class.getSimpleName();
 
@@ -42,28 +41,19 @@ public class MovieDetailsActivity extends AppCompatActivity implements MainActiv
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onItemSelected(Uri contentUri) {
-//
-//        Intent intent = new Intent(this, MovieDetailsActivity.class)
-//                .setData(contentUri);
-//        startActivity(intent);
-
-    }
-
 
     // Favorite button click
     public void addMovieAsFavorite(View view) {
         // Get the fragment and invoke a method on the framgement that will add the movie as favorite
-        String movieID =  view.getTag(R.string.favorite_movieId).toString();
-        MovieDetailsActivityFragment movieDetailsActivityFragment = (MovieDetailsActivityFragment)getSupportFragmentManager().findFragmentById(R.id.movie_details);
+        String movieID = view.getTag(R.string.favorite_movieId).toString();
+        MovieDetailsActivityFragment movieDetailsActivityFragment = (MovieDetailsActivityFragment) getSupportFragmentManager().findFragmentById(R.id.movie_details);
         movieDetailsActivityFragment.addMovieAsFavorite(movieID);
 
     }
 
     // Play Youtube Trailer
     public void playTrailer(View view) {
-        String youTubeKey =  view.getTag(R.string.youTube_key).toString();
+        String youTubeKey = view.getTag(R.string.youTube_key).toString();
         Intent intent = new Intent(this, WebViewActivity.class).putExtra(String.valueOf(R.string.youTube_key), youTubeKey);
         startActivity(intent);
     }

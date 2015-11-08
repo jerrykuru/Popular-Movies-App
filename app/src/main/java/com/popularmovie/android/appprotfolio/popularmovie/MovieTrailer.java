@@ -3,17 +3,6 @@ package com.popularmovie.android.appprotfolio.popularmovie;
 
 public class MovieTrailer {
 
-
-    /**
-     *  "id": "54282ba2c3a3680b1b002905",
-     "iso_639_1": "en",
-     "key": "NuUnJ5WL1g",
-     "name": "Trailer",
-     "site": "YouTube",
-     "size": 360,
-     "type": "Trailer"
-     */
-
     private String movieTrailerID;
     private String iso_639_1;
     private String key;

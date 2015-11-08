@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso;
 public class MovieAdapter extends CursorAdapter {
 
     private static final String LOG_TAG = MovieAdapter.class.getSimpleName();
+
     public MovieAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }

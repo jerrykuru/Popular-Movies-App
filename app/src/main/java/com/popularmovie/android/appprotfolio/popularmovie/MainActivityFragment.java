@@ -77,7 +77,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         mMovieAdapter = new MovieAdapter(getActivity(), null, 0);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-     //   getMovieListByPreference();
+        //   getMovieListByPreference();
         GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
         gridview.setAdapter(mMovieAdapter);
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -135,13 +135,13 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         String movieSortSelection = prefs.getString(getString(R.string.movie_sort_key), getString(R.string.movie_sort_key_default));
 
         if (movieSortSelection.equalsIgnoreCase(SelectionType.HighestRated.getSortType())) {
-            movieSelectionUri =  MovieContract.MovieEntry.buildListOfHighestRatedMovies();
-       }
+            movieSelectionUri = MovieContract.MovieEntry.buildListOfHighestRatedMovies();
+        }
         if (movieSortSelection.equalsIgnoreCase(SelectionType.Popular.getSortType())) {
-            movieSelectionUri =  MovieContract.MovieEntry.buildListOfPopularMovies();
+            movieSelectionUri = MovieContract.MovieEntry.buildListOfPopularMovies();
         }
         if (movieSortSelection.equalsIgnoreCase(SelectionType.Favourite.getSortType())) {
-            movieSelectionUri =  MovieContract.MovieEntry.buildListFavouriteMoviesUri();
+            movieSelectionUri = MovieContract.MovieEntry.buildListFavouriteMoviesUri();
         }
 
         return new CursorLoader(getActivity(),

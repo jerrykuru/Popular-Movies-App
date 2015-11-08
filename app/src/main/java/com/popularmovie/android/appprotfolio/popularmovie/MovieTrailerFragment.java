@@ -88,7 +88,7 @@ public class MovieTrailerFragment extends Fragment implements LoaderManager.Load
         mMovieId = MovieContract.MovieEntry.getMovieIdFromUri(mUri);
         mUri = MovieContract.MovieTrailerEntry.buildMovieTrailerUri(new Long(mMovieId));
 
-        View rootView =  inflater.inflate(R.layout.fragment_trailer_main, container, true);
+        View rootView = inflater.inflate(R.layout.fragment_trailer_main, container, true);
         ListView listView = (ListView) rootView.findViewById(R.id.listview_trailer);
         listView.setAdapter(mMovieTrailerAdapter);
         return rootView;
@@ -96,11 +96,6 @@ public class MovieTrailerFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-
-
-//        mUri = getActivity().getIntent().getData();
-//        mMovieId = MovieContract.MovieEntry.getMovieIdFromUri(mUri);
-//        mUri = MovieContract.MovieTrailerEntry.buildMovieTrailerUri(new Long(mMovieId));
 
         if (null != mUri) {
 
@@ -128,21 +123,22 @@ public class MovieTrailerFragment extends Fragment implements LoaderManager.Load
     public void onLoaderReset(Loader<Cursor> loader) {
         mMovieTrailerAdapter.swapCursor(null);
     }
-    private void resolveInstanceValues(){
-        Bundle arguments =  null;
-        if(getParentFragment() != null) {
-            arguments=  getParentFragment().getArguments();
-        }else {
+
+    private void resolveInstanceValues() {
+        Bundle arguments = null;
+        if (getParentFragment() != null) {
+            arguments = getParentFragment().getArguments();
+        } else {
             arguments = getArguments();
         }
         if (arguments != null) {
             mUri = arguments.getParcelable(DETAIL_URI);
-        }else {
+        } else {
             mUri = getActivity().getIntent().getData();
         }
-        if (mUri == null){
+        if (mUri == null) {
             //Build a default URI
-            mUri =  MovieContract.MovieEntry.buildMovieUri(new Long(10751));
+            mUri = MovieContract.MovieEntry.buildMovieUri(new Long(10751));
         }
         Log.d(LOG_TAG, mUri.toString());
     }

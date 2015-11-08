@@ -76,13 +76,12 @@ public class MovieContract {
         }
 
 
-
         public static Uri buildListFavouriteMoviesUri() {
             return CONTENT_URI.buildUpon().appendPath(MOVIE_FAVOURITE).build();
         }
 
         public static Uri buildAddFavouriteMoviesUri(long movieID) {
-           return CONTENT_URI.buildUpon().appendPath(MOVIE_FAVOURITE).appendPath(MOVIE_ADD_FAVOURITE).appendPath(Math.round(movieID)+"").build();
+            return CONTENT_URI.buildUpon().appendPath(MOVIE_FAVOURITE).appendPath(MOVIE_ADD_FAVOURITE).appendPath(Math.round(movieID) + "").build();
         }
 
         public static Uri buildMovieUri(long id) {
@@ -167,8 +166,8 @@ public class MovieContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static Uri buildMovieTrailerWithYouTube(String youTube){
-           return  BASE_CONTENT_URI.buildUpon().appendPath(youTube).build();
+        public static Uri buildMovieTrailerWithYouTube(String youTube) {
+            return BASE_CONTENT_URI.buildUpon().appendPath(youTube).build();
         }
 
     }

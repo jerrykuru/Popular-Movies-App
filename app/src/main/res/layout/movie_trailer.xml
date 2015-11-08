@@ -15,8 +15,8 @@
             android:id="@+id/youtube_id"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:onClick="playTrailer"
-            android:background="@mipmap/ic_action"/>
+            android:background="@mipmap/ic_action"
+            android:onClick="playTrailer" />
 
         <TextView
             android:id="@+id/trailer_count"

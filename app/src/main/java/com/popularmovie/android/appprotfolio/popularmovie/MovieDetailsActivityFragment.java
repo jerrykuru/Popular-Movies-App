@@ -73,7 +73,7 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
     private TextView mPlotSynopsisView;
     private TextView mReleaseDateView;
     private TextView mVoteAverageView;
-    private  Button mButton;
+    private Button mButton;
 
     public void addMovieAsFavorite(String movieID) {
 
@@ -147,7 +147,7 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
         mReleaseDateView = (TextView) rootView.findViewById(R.id.release_date);
         mVoteAverageView = (TextView) rootView.findViewById(R.id.vote_average);
         mButton = (Button) rootView.findViewById(R.id.addMovieAsFavorite);
-        mButton.setTag(R.string.favorite_movieId,mMovieId);
+        mButton.setTag(R.string.favorite_movieId, mMovieId);
         return rootView;
     }
 
@@ -183,7 +183,7 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
         if (data != null && data.moveToFirst()) {
-           Picasso.with(getContext()).load(data.getString(COL_MOVIE_POSTER_PATH)).into(mPosterView);
+            Picasso.with(getContext()).load(data.getString(COL_MOVIE_POSTER_PATH)).into(mPosterView);
             mMovieTitleView.setText(data.getString(COL_MOVIE_TITLE));
             mPlotSynopsisView.setText(data.getString(COL_MOVIE_OVERVIEW));
             String voteAverage = "/10";
@@ -207,21 +207,21 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
     public void onLoaderReset(Loader<Cursor> loader) {
     }
 
-    private void resolveInstanceValues(){
-        Bundle arguments =  null;
-        if(getParentFragment() != null) {
-            arguments=  getParentFragment().getArguments();
-        }else {
+    private void resolveInstanceValues() {
+        Bundle arguments = null;
+        if (getParentFragment() != null) {
+            arguments = getParentFragment().getArguments();
+        } else {
             arguments = getArguments();
         }
         if (arguments != null) {
             mUri = arguments.getParcelable(DETAIL_URI);
-        }else {
+        } else {
             mUri = getActivity().getIntent().getData();
         }
-        if (mUri == null){
+        if (mUri == null) {
             //Build a default URI
-            mUri =  MovieContract.MovieEntry.buildMovieUri(new Long(10751));
+            mUri = MovieContract.MovieEntry.buildMovieUri(new Long(10751));
         }
         Log.d(LOG_TAG, mUri.toString());
     }

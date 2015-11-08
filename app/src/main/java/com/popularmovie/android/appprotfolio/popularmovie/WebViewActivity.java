@@ -16,9 +16,9 @@ public class WebViewActivity extends Activity {
         setContentView(R.layout.movie_trailer_web_view);
         webView = (WebView) findViewById(R.id.webView1);
         webView.getSettings().setJavaScriptEnabled(true);
-        String urlConst =  "https://www.youtube.com/watch?v=";
+        String urlConst = "https://www.youtube.com/watch?v=";
         String youTubeKey = getIntent().getStringExtra(String.valueOf(R.string.youTube_key));
-        webView.loadUrl(urlConst+youTubeKey);
+        webView.loadUrl(urlConst + youTubeKey);
 
     }
 

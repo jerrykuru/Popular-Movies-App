@@ -89,9 +89,6 @@ public class MovieReviewFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-//        mUri = getActivity().getIntent().getData();
-//        mMovieId = MovieContract.MovieEntry.getMovieIdFromUri(mUri);
-//        mUri = MovieContract.MovieReviewEntry.buildListMovieReviewURI(new Long(mMovieId));
 
         if (null != mUri) {
 
@@ -122,21 +119,21 @@ public class MovieReviewFragment extends Fragment implements LoaderManager.Loade
 
     }
 
-    private void resolveInstanceValues(){
-        Bundle arguments =  null;
-        if(getParentFragment() != null) {
-            arguments=  getParentFragment().getArguments();
-        }else {
+    private void resolveInstanceValues() {
+        Bundle arguments = null;
+        if (getParentFragment() != null) {
+            arguments = getParentFragment().getArguments();
+        } else {
             arguments = getArguments();
         }
         if (arguments != null) {
             mUri = arguments.getParcelable(DETAIL_URI);
-        }else {
+        } else {
             mUri = getActivity().getIntent().getData();
         }
-        if (mUri == null){
+        if (mUri == null) {
             //Build a default URI
-            mUri =  MovieContract.MovieEntry.buildMovieUri(new Long(10751));
+            mUri = MovieContract.MovieEntry.buildMovieUri(new Long(10751));
         }
         Log.d(LOG_TAG, mUri.toString());
     }

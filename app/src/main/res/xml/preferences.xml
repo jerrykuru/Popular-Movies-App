@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ListPreference
-        android:title="Sort Movies by"
-        android:key="@string/movie_sort_key"
         android:defaultValue="4"
         android:entries="@array/movie_sort_by"
-        android:entryValues="@array/movie_sort_by_values" />
+        android:entryValues="@array/movie_sort_by_values"
+        android:key="@string/movie_sort_key"
+        android:title="Sort Movies by" />
 </PreferenceScreen>

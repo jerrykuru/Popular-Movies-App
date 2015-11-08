@@ -14,7 +14,7 @@ public class HttpUtility {
 
     private final String LOG_TAG = HttpUtility.class.getSimpleName();
 
-    public  String talkToOutsideWorld(URL url) {
+    public String talkToOutsideWorld(URL url) {
 
         // These two need to be declared outside the try/catch
         // so that they can be closed in the finally block.
