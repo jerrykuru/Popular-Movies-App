@@ -15,6 +15,7 @@
     <string name="review_Fragment_heading">Reviews</string>
     <string name="poster">movie</string>
     <string name="favorite_movieId">movieId</string>
+    <string name="youTube_key">youTubeKey</string>
 
 
 </resources>

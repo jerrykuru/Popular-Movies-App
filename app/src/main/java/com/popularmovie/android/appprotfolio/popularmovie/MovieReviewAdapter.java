@@ -4,7 +4,6 @@ package com.popularmovie.android.appprotfolio.popularmovie;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +29,10 @@ public class MovieReviewAdapter extends CursorAdapter {
         TextView authorView = (TextView) view.findViewById(R.id.review_author);
         String author = cursor.getString(MovieReviewFragment.COL_AUTHOR);
         authorView.setText(author);
-        Log.d(LOG_TAG,author);
         TextView reviewComments = (TextView) view.findViewById(R.id.review_comments);
         String comments = cursor.getString(MovieReviewFragment.COL_CONTENT);
         reviewComments.setText(comments);
+
 
     }
 

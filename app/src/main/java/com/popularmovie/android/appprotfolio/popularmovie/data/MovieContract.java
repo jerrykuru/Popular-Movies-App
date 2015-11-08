@@ -155,13 +155,20 @@ public class MovieContract {
         public static final String COLUMN_COUNT = "count";
 
 
-
         public static String getMovieIdFromUri(Uri uri) {
+            return uri.getPathSegments().get(1);
+        }
+
+        public static String getYouTubeKeyFromUri(Uri uri) {
             return uri.getPathSegments().get(1);
         }
 
         public static Uri buildMovieTrailerUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+        public static Uri buildMovieTrailerWithYouTube(String youTube){
+           return  BASE_CONTENT_URI.buildUpon().appendPath(youTube).build();
         }
 
     }
