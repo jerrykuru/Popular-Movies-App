@@ -15,7 +15,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements MainActiv
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_activity_movie_details);
+        setContentView(R.layout.activity_movie_details);
 
     }
 

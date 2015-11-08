@@ -39,6 +39,7 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
     private static final int MOVIE_LOADER = 0;
     private Uri mUri;
     private String mMovieId;
+    static final String DETAIL_URI = "URI";
 
     // For the Movie view we're showing only a small subset of the stored data.
     // Specify the columns we need.
@@ -136,7 +137,16 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_movie_details, container, false);
-        mUri = getActivity().getIntent().getData();
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            mUri = arguments.getParcelable(DETAIL_URI);
+        }else {
+            mUri = getActivity().getIntent().getData();
+        }
+        if (mUri == null){
+            //Build a default URI
+            mUri =  MovieContract.MovieEntry.buildMovieUri(new Long(10751));
+        }
         Log.d(LOG_TAG, mUri.toString());
         mMovieId = MovieContract.MovieEntry.getMovieIdFromUri(mUri);
         getMovieDetailByMovieId(mMovieId);

@@ -2,11 +2,17 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-        config {
-            keyAlias 'Jerry'
-            keyPassword 'home123'
-            storeFile file('/Users/binu/binu.jks')
-            storePassword 'home123'
+        debug {
+            keyAlias 'julu01'
+            keyPassword 'julu01'
+            storePassword 'julu01'
+            storeFile file('/Users/binu/final.jks')
+        }
+        release {
+            keyAlias 'julu01'
+            keyPassword 'julu01'
+            storePassword 'julu01'
+            storeFile file('/Users/binu/final.jks')
         }
     }
     compileSdkVersion 23
@@ -17,7 +23,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-        signingConfig signingConfigs.config
+       signingConfig signingConfigs.debug
     }
     buildTypes {
         release {
@@ -28,8 +34,7 @@ android {
     buildTypes.each {
         it.buildConfigField 'String', 'Movie_API_KEY', '"7c5abefc53acec71067d4859c75dbd0f"'
     }
-    productFlavors {
-    }
+
 }
 repositories {
     mavenCentral()
