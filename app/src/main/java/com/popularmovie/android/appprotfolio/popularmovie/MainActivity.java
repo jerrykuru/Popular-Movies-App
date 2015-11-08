@@ -10,7 +10,7 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity implements MainActivityFragment.Callback {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-    private static final String DETAILFRAGMENT_TAG = "DFTAG";
+    private static final String MAIN_DETAIL_FRAGMENT_TAG = "DMFTAG";
 
     private boolean mTwoPane = false;
     @Override
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
             // fragment transaction.
             if (savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.movie_details, new MovieDetailsActivityFragment(), DETAILFRAGMENT_TAG)
+                        .replace(R.id.movie_details, new MovieDetailsFragment(), MAIN_DETAIL_FRAGMENT_TAG)
                         .commit();
             }
         }
@@ -64,15 +64,18 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
-            Bundle args = new Bundle();
-            args.putParcelable(MovieDetailsActivityFragment.DETAIL_URI, contentUri);
 
-            MovieDetailsActivityFragment fragment = new MovieDetailsActivityFragment();
-            fragment.setArguments(args);
+
+            Bundle args = new Bundle();
+            args.putParcelable(MovieDetailsFragment.DETAIL_URI, contentUri);
+
+            MovieDetailsFragment movieDetailsFragment = new MovieDetailsFragment();
+            movieDetailsFragment.setArguments(args);
 
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.movie_details, fragment, DETAILFRAGMENT_TAG)
+                    .replace(R.id.movie_details, movieDetailsFragment, MAIN_DETAIL_FRAGMENT_TAG)
                     .commit();
+
         } else {
             Intent intent = new Intent(this, MovieDetailsActivity.class)
                     .setData(contentUri);

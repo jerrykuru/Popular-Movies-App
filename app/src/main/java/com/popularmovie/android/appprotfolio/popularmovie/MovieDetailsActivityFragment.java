@@ -136,18 +136,9 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         View rootView = inflater.inflate(R.layout.fragment_movie_details, container, false);
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            mUri = arguments.getParcelable(DETAIL_URI);
-        }else {
-            mUri = getActivity().getIntent().getData();
-        }
-        if (mUri == null){
-            //Build a default URI
-            mUri =  MovieContract.MovieEntry.buildMovieUri(new Long(10751));
-        }
-        Log.d(LOG_TAG, mUri.toString());
+        resolveInstanceValues();
         mMovieId = MovieContract.MovieEntry.getMovieIdFromUri(mUri);
         getMovieDetailByMovieId(mMovieId);
         mPosterView = (ImageView) rootView.findViewById(R.id.poster);
@@ -216,5 +207,22 @@ public class MovieDetailsActivityFragment extends Fragment implements LoaderMana
     public void onLoaderReset(Loader<Cursor> loader) {
     }
 
-
+    private void resolveInstanceValues(){
+        Bundle arguments =  null;
+        if(getParentFragment() != null) {
+            arguments=  getParentFragment().getArguments();
+        }else {
+            arguments = getArguments();
+        }
+        if (arguments != null) {
+            mUri = arguments.getParcelable(DETAIL_URI);
+        }else {
+            mUri = getActivity().getIntent().getData();
+        }
+        if (mUri == null){
+            //Build a default URI
+            mUri =  MovieContract.MovieEntry.buildMovieUri(new Long(10751));
+        }
+        Log.d(LOG_TAG, mUri.toString());
+    }
 }
