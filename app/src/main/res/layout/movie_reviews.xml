@@ -16,7 +16,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed"
             android:text="Author"
-            android:textAppearance="?android:textAppearanceSmall" />
+            android:textAppearance="?android:textAppearanceSmall"
+            android:background="#26dcf78c" />
 
         <TextView
             android:id="@+id/review_comments"
