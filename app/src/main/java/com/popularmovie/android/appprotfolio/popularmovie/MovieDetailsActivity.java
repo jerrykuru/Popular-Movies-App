@@ -46,7 +46,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     public void addMovieAsFavorite(View view) {
         // Get the fragment and invoke a method on the framgement that will add the movie as favorite
         String movieID = view.getTag(R.string.favorite_movieId).toString();
-        MovieDetailsActivityFragment movieDetailsActivityFragment = (MovieDetailsActivityFragment) getSupportFragmentManager().findFragmentById(R.id.movie_details);
+        MovieDetailsActivityFragment movieDetailsActivityFragment = (MovieDetailsActivityFragment) getSupportFragmentManager().findFragmentById(R.id.movie_poster_syno_details);
         movieDetailsActivityFragment.addMovieAsFavorite(movieID);
 
     }
